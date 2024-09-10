@@ -36,11 +36,13 @@ const doLogin=()=>{
   const { username,password }=form.value
   formRef.value.validate(async (valid)=>{
     if(valid){
-
       await getUserAPI({username,password})
       ElMessage({type:'success' ,message:'登录成功'})
-      router.replace({path:'/home'})
-      
+      if (username==='admin'){
+        router.replace({path:'/admin'})
+      }else{
+        router.replace({path:'/home'})
+      }
     }
   })
 }

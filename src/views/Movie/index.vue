@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  我是首页
+  我是电影页
 </template>
 
 <style scoped>

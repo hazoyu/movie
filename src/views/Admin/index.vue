@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  我是首页
+  管理员界面
 </template>
 
-<style scoped>
+<style  scoped>
 
 </style>
