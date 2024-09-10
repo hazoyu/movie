@@ -41,7 +41,7 @@ const doLogin=()=>{
       if (username==='admin'){
         router.replace({path:'/admin'})
       }else{
-        router.replace({path:'/home'})
+        router.replace({path:'/'})
       }
     }
   })

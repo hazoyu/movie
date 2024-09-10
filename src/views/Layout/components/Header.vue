@@ -18,6 +18,7 @@ const login = () => {
       </div>
       <div class="user">
         <RouterLink to="/">个人中心</RouterLink>
+        <RouterLink class="out" to="/login">退出登录</RouterLink>
       </div>
     </div>
   </div>
@@ -54,5 +55,9 @@ a {
   float: right;
   display: flex;
   line-height: 80px;
+}
+.out{
+  font-size: 15px;
+  font-weight: normal;
 }
 </style>
