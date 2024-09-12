@@ -1,8 +1,11 @@
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter()
-const login = () => {
-  router.replace({ path: '/' })
+const index =ref(1)
+
+const tab = (a) =>{
+  index.value=a
 }
 </script>
 
@@ -12,9 +15,9 @@ const login = () => {
     <div class="container">
       <div class="nav">
         <img class="logo" src="../../../assets/images/2.png" alt="">
-        <RouterLink to="/">首页</RouterLink>
-        <RouterLink to="/movie">电影</RouterLink>
-        <RouterLink to="/cinema">影院</RouterLink>
+        <RouterLink @click="tab(1)" :class="{active : index==1}" to="/">首页</RouterLink>
+        <RouterLink @click="tab(2)" :class="{active : index==2}" to="/movie">电影</RouterLink>
+        <RouterLink @click="tab(3)" :class="{active : index==3}" to="/cinema">影院</RouterLink>
       </div>
       <div class="user">
         <RouterLink to="/">个人中心</RouterLink>
@@ -59,5 +62,8 @@ a {
 .out{
   font-size: 15px;
   font-weight: normal;
+}
+.active{
+  background-color: hsla(242, 89%, 50%, 0.5);
 }
 </style>
