@@ -1,5 +1,28 @@
 <script setup>
+import {getMovieHotAPI,getMovieFutureAPI,getMovieBoxOfficeAPI} from '@/apis/movie'
+import { onMounted, ref } from 'vue';
+const hotList = ref({})
+const futureList = ref([])
+const boxOfficeList = ref([])
+const getHotList =async() =>{
+  const res = await getMovieHotAPI()
+  hotList.value=res
+}
 
+const getfutureList =async() =>{
+  const res = await getMovieFutureAPI()
+  futureList.value=res
+}
+const getboxOfficeList =async() =>{
+  const res = await getMovieBoxOfficeAPI()
+  boxOfficeList.value=res
+}
+
+onMounted(()=>{
+  getHotList(),
+  getfutureList(),
+  getboxOfficeList()
+})
 </script>
 
 <template>
@@ -11,11 +34,11 @@
             <h2>正在热映</h2>
           </div>
           <div class="movie-list">
-            <div class="movie-poster" v-for="i in 8">
-              <img style="width: 100%; height: 220px;" src="../../assets/images/220.jpeg" alt="">
+            <div class="movie-poster" v-for="i in hotList">
+              <img style="width: 100%; height: 220px;" :src="i.url" alt="">
               <p class="name">
-                <span style="float: left;">文波</span>
-                <span style="float: right;">9.8</span>
+                <span class="title" :title="i.title " >{{ i.title }}</span>
+                <span class="score" >{{ i.score }}</span>
               </p>
               <!-- <span class="buy">购买</span> -->
               <p class="buy">购买</p>
@@ -27,13 +50,11 @@
             <h2>即将上映</h2>
           </div>
           <div class="movie-list">
-            <div class="movie-poster" v-for="i in 8">
-              <img style="width: 100%; height: 220px;" src="../../assets/images/220.jpeg" alt="">
-              <p class="name">
-                <span style="float: left;">文波</span>
+            <div class="movie-poster" v-for="i in futureList.slice(0,8)">
+              <img style="width: 100%; height: 220px;" :src="i.url" alt="">
+              <p class="name a">
+                <span class="title" :title="i.title " >{{i.title}}</span>
               </p>
-              <!-- <span class="buy">购买</span> -->
-              <p class="want">0人想看</p>
               <div class="notice">
                 <p class="notice1">预告片</p>
                 <p class="notice2">预售</p>
@@ -45,8 +66,24 @@
 
         </div>
       </div>
-      <div class="grossed">
-        <h2>今日票房</h2>
+      <div class="boxOffice">
+        <h2>本周票房</h2>
+        <div class="boxOffice-list">
+          <div class="weeklist" v-for="(i,index) in boxOfficeList.slice(0,3)">
+            <div>
+              <span class="sort">{{ index+1 }}</span>
+              <span>{{i.title}}</span>
+            </div>
+            <span class="count">{{i.boxoffice}}</span>
+          </div>
+          <div class="weeklist" v-for="(i,index) in boxOfficeList.slice(3,5)">
+            <div>
+              <span class="sort2">{{ index+4 }}</span>
+              <span>{{i.title}}</span>
+            </div>
+            <span class="count">{{i.boxoffice}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -66,18 +103,44 @@
   width: 760px;
 }
 
-.grossed {
+.boxOffice {
   width: 400px;
 }
 
-h2 {
-  color: #ef4238;
+.weeklist{
+  display: flex;
+  height: 55px;
+  justify-content: space-between;
+  padding: 0 10px;
+  line-height: 55px;
+  font-size: 16px;
 }
+.sort{
+  font-family: '华文隶书',  sans-serif;
+  margin-right: 10px;
+  font-size: 18px;
+  color: red;
+}
+.sort2{
+  font-family: '华文隶书',  sans-serif;
+  margin-right: 10px;
+  font-size: 18px;
+}
+.count{
+  color: blue;
+}
+h2 {
+  /* color:hsl(242, 89%, 50%); */
+  color: blue;
+}
+
+
 
 .movie-list {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  
 }
 
 .movie-poster {
@@ -87,39 +150,58 @@ h2 {
   flex-direction: column;
   width: 160px;
   border: 1px solid rgb(232, 231, 231);
+  box-sizing: border-box;
 }
 
 .name {
   position: absolute;
   font-size: 18px;
   color: white;
-  top: 194px;
+  top: -42px;
   width: 100%;
+  height: 100%;
   padding: 0 10px;
-  background-color: rgba(22, 21, 21, 0.5);
+  background: url(../../assets/images/0.png) repeat-x bottom;
 }
-
+.a{
+  top: -80px;
+}
+.title{
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  width: 80%;
+     /* 文本不换行 */
+     white-space: nowrap;
+  /* 超出范围隐藏 */
+  overflow: hidden;
+  /* 文字超出用省略号 */
+  text-overflow: ellipsis;
+}
+.score{
+  position: absolute;
+  bottom: -5px;
+  right: 10px;
+  font-family: '华文隶书',  sans-serif;
+  color: #ffb400;
+}
 .buy {
   font-size: 16px;
-  color: #ef4238;
+  color: blue;
   padding: 10px 0;
   text-align: center;
   cursor: pointer;
 }
 .buy:hover {
-  background-color: #ef4238;
+  background-color: blue;
   color: white;
 }
 
-.want {
-  color: #ffb400;
-  padding: 10px;
-}
 
 .notice {
   display: flex;
   text-align: center;
-  padding: 0 0 10px 0;
+  padding: 10px 0 10px 0;
 }
 
 .notice1 {
@@ -137,5 +219,6 @@ h2 {
   text-align: center;
   padding: 10px;
   border-top: 1px solid rgb(232, 231, 231);
+  color: #999;
 }
 </style>

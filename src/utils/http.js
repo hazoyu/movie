@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const httpInstance = axios.create({
-  baseURL: 'http://localhost:8002/login',
+  baseURL: 'http://192.168.255.3:8002',
   timeout: 5000
 })
 

@@ -65,5 +65,6 @@ a {
 }
 .active{
   background-color: hsla(242, 89%, 50%, 0.5);
+  color: white;
 }
 </style>
