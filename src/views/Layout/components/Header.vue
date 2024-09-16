@@ -1,12 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-const router = useRouter()
-const index =ref(1)
-
-const tab = (a) =>{
-  index.value=a
-}
+import { useRoute } from 'vue-router';
+const route = useRoute()
 </script>
 
 <template>
@@ -15,9 +9,9 @@ const tab = (a) =>{
     <div class="container">
       <div class="nav">
         <img class="logo" src="../../../assets/images/2.png" alt="">
-        <RouterLink @click="tab(1)" :class="{active : index==1}" to="/">首页</RouterLink>
-        <RouterLink @click="tab(2)" :class="{active : index==2}" to="/movie">电影</RouterLink>
-        <RouterLink @click="tab(3)" :class="{active : index==3}" to="/cinema">影院</RouterLink>
+        <RouterLink :class="{active : route.path==='/'}" to="/">首页</RouterLink>
+        <RouterLink :class="{active : route.path.slice(0,6)==='/movie'}" to="/movie">电影</RouterLink>
+        <RouterLink :class="{active : route.path==='/cinema'}" to="/cinema">影院</RouterLink>
       </div>
       <div class="user">
         <RouterLink to="/">个人中心</RouterLink>

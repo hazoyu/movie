@@ -5,6 +5,8 @@ import Admin from '@/views/Admin/index.vue'
 import Layout from '@/views/Layout/index.vue'
 import Movie from '@/views/Movie/index.vue'
 import Cinema from '@/views/Cinema/index.vue'
+import Hot from '@/views/Movie/components/Hot.vue'
+import Future from '@/views/Movie/components/Future.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,7 +25,17 @@ const router = createRouter({
         },
         {
           path: 'movie',
-          component: Movie
+          component: Movie,
+          children:[
+            {
+              path: '',
+              component: Hot
+            },
+            {
+              path: 'future',
+              component: Future
+            },
+          ]
         },
         {
           path: 'cinema',

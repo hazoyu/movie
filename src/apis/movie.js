@@ -2,7 +2,7 @@ import request from '@/utils/http'
 
 export const getMovieHotAPI = () =>{
   return request({
-    url:'/moviehot/list',
+    url:'/moviehot2/list',
   })
 }
 
