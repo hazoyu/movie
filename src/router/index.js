@@ -7,6 +7,9 @@ import Movie from '@/views/Movie/index.vue'
 import Cinema from '@/views/Cinema/index.vue'
 import Hot from '@/views/Movie/components/Hot.vue'
 import Future from '@/views/Movie/components/Future.vue'
+import UserM from '@/views/UserM/index.vue'
+import MovieM from '@/views/MovieM/index.vue'
+import CinemaM from '@/views/CinemaM/index.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -45,17 +48,24 @@ const router = createRouter({
     },
     {
       path: '/admin',
-      component: Admin
+      component: Admin,
+      children:[
+        {
+          path: '',
+          component: UserM
+        },
+        {
+          path: 'moviem',
+          component: MovieM
+        },
+        {
+          path: 'cinemam',
+          component: CinemaM
+        },
+      ]
     },
 
-    // {
-      // path: '/about',
-      // name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // component: () => import('../views/AboutView.vue')
-    // }
+    
   ]
 })
 
