@@ -2,29 +2,7 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute()
-const value = ref('南宁市')
-const options = [
-  {
-    value: '南宁市',
-    label: '南宁市',
-  },
-  {
-    value: '柳州市',
-    label: '柳州市',
-  },
-  {
-    value: '桂林市',
-    label: '桂林市',
-  },
-  {
-    value: '玉林市',
-    label: '玉林市',
-  },
-  {
-    value: '崇左市',
-    label: '崇左市',
-  },
-]
+
 </script>
 
 <template>
@@ -33,17 +11,14 @@ const options = [
     <div class="container">
       <div class="nav">
         <img class="logo" src="../../../assets/images/2.png" alt="">
-        <el-select v-model="value"  style="width: 150px" class="se">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
-            :disabled="item.disabled" />
-        </el-select>
+
         <RouterLink :class="{ active: route.path === '/' }" to="/">首页</RouterLink>
 
         <RouterLink :class="{ active: route.path.slice(0, 6) === '/movie' }" to="/movie">电影</RouterLink>
-        <RouterLink :class="{ active: route.path === '/cinema' }" to="/cinema">影院</RouterLink>
+        <!-- <RouterLink :class="{ active: route.path === '/cinema' }" to="/cinema">影院</RouterLink> -->
       </div>
       <div class="user">
-        <RouterLink to="/">个人中心</RouterLink>
+        <RouterLink :class="{ active: route.path.slice(0, 5) === '/user' }"  to="/user">个人中心</RouterLink>
         <RouterLink class="out" to="/login">退出登录</RouterLink>
       </div>
     </div>

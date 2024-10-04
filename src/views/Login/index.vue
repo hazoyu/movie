@@ -5,26 +5,26 @@ import { getUserAPI } from '@/apis/login';
 
 
 const router = useRouter()
-const formRef=ref(null)
-const form=ref({
-  username:"",
-  password:"",
-  agree:true
+const formRef = ref(null)
+const form = ref({
+  username: "",
+  password: "",
+  agree: true
 })
-const rules={
+const rules = {
   username: [
     { required: true, message: '用户名不能为空', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' }
   ],
-  agree:[
+  agree: [
     {
-      validator:(rule,value,callback)=>{
+      validator: (rule, value, callback) => {
         //自定义校验逻辑
-        if(value){
+        if (value) {
           callback()
-        }else{
+        } else {
           callback(new Error('请勾选协议'))
         }
       }
@@ -32,19 +32,22 @@ const rules={
   ]
 }
 
-const doLogin=()=>{
-  const { username,password }=form.value
-  formRef.value.validate(async (valid)=>{
-    if(valid){
-      await getUserAPI({username,password})
-      ElMessage({type:'success' ,message:'登录成功'})
-      if (username==='admin'){
-        router.replace({path:'/admin'})
-      }else{
-        router.replace({path:'/'})
+const doLogin = () => {
+  const { username, password } = form.value
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await getUserAPI({ username, password })
+      ElMessage({ type: 'success', message: '登录成功' })
+      if (username === 'admin') {
+        router.replace({ path: '/admin' })
+      } else {
+        router.replace({ path: '/' })
       }
     }
   })
+}
+const register = () =>{
+  router.replace({ path: '/register' })
 }
 </script>
 
@@ -56,15 +59,15 @@ const doLogin=()=>{
     <div class="body">
       <img style="width: 480px; height: 370px;" src="../../assets/images/1.png" alt="">
       <div class="form">
-        <el-form style="width: 300px;" ref="formRef" :model="form" :rules="rules" >
-          <el-form-item  prop="username">
-            <el-input placeholder="请输入用户名" v-model="form.username"/>
+        <el-form style="width: 300px;" ref="formRef" :model="form" :rules="rules">
+          <el-form-item prop="username">
+            <el-input placeholder="请输入用户名" v-model="form.username" />
           </el-form-item>
-          <el-form-item  prop="password">
-            <el-input type="password" show-password placeholder="请输入密码" v-model="form.password"/>
+          <el-form-item prop="password">
+            <el-input type="password" show-password placeholder="请输入密码" v-model="form.password" />
           </el-form-item>
           <el-form-item prop="agree" style="font-size: 12px;">
-            <el-checkbox v-model="form.agree" size="large" >
+            <el-checkbox v-model="form.agree" size="large">
               我已同意隐私条款和服务条款
             </el-checkbox>
           </el-form-item>
@@ -74,6 +77,9 @@ const doLogin=()=>{
             </el-button>
           </el-form-item>
         </el-form>
+        <el-button plain @click="register" class="subBtn">
+          注册
+        </el-button>
       </div>
     </div>
   </div>
@@ -101,12 +107,21 @@ const doLogin=()=>{
   height: 500px;
   padding-top: 100px;
 }
-.input{
+
+.input {
   height: 30px;
 }
-.subBtn{
+
+.subBtn {
   width: 300px;
   border-radius: 20px;
   height: 40px;
 }
+
+.enBtn {
+  width: 300px;
+  border-radius: 20px;
+  height: 40px;
+}
+
 </style>

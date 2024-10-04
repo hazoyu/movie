@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue'
 
 const radio = ref('全部区域')
@@ -71,4 +71,4 @@ console.log(radio.value);
   color: #999;
   margin-top: 10px;
 }
-</style>
+</style> -->

@@ -20,6 +20,12 @@ httpInstance.interceptors.response.use(res => res.data, e => {
       type:'warning',
       message:e.response.request.response
     })
+  }else{
+    ElMessage({
+      type:'warning',
+      message:e.response.request.response
+    })
+  
   }
   
   return Promise.reject(e)
