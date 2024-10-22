@@ -1,7 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAllDataStore } from '@/stores';
+
+
+const stoer = useAllDataStore()
 const route = useRoute()
+const user = stoer.state.user.username
 
 </script>
 
@@ -11,13 +16,14 @@ const route = useRoute()
     <div class="container">
       <div class="nav">
         <img class="logo" src="../../../assets/images/2.png" alt="">
-
-        <RouterLink :class="{ active: route.path === '/' }" to="/">首页</RouterLink>
+               
+        <RouterLink :class="{ active: route.path === '/' }" to="/" >首页</RouterLink>
 
         <RouterLink :class="{ active: route.path.slice(0, 6) === '/movie' }" to="/movie">电影</RouterLink>
         <!-- <RouterLink :class="{ active: route.path === '/cinema' }" to="/cinema">影院</RouterLink> -->
       </div>
       <div class="user">
+        <RouterLink v-show="user == 'admin'" to="/admin">管理</RouterLink>
         <RouterLink :class="{ active: route.path.slice(0, 5) === '/user' }"  to="/user">个人中心</RouterLink>
         <RouterLink class="out" to="/login">退出登录</RouterLink>
       </div>

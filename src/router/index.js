@@ -30,7 +30,6 @@ const router = createRouter({
     },
     {
       path: '/',
-      name:'layout',
       component: Layout,
       children:[
         {
@@ -77,18 +76,22 @@ const router = createRouter({
     },
     {
       path: '/admin',
+      name:'admin',
       component: Admin,
       children:[
         {
           path: '',
+          name:'userm',
           component: UserM
         },
         {
           path: 'moviem',
+          name:'moviem',
           component: MovieM
         },
         {
           path: 'cinemam',
+          name:'cinemam',
           component: CinemaM
         },
         

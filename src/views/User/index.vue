@@ -23,6 +23,7 @@ const route = useRoute()
   margin-top: 50px;
   margin-bottom: 50px;
   border: 1px solid rgb(212, 209, 209);
+  height: auto;
 }
 .menuList{
   display: flex;

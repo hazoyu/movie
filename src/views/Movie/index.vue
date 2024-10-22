@@ -1,22 +1,20 @@
 <script setup>
-import { useRouter,useRoute } from 'vue-router';
-const route = useRoute()
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 const router = useRouter()
-const hot = () =>{
-  router.push('/movie')
-}
-const future = () =>{
-  router.push('/movie/future')
+const activeName = ref('/movie')
+const handleClick = (tab) =>{
+  router.push(tab.props.name)
 }
 </script>
 
 <template>
   <div class="movie container">
-    <div>
-      <span @click="hot" class="hot" :class="{active : route.path==='/movie'}">正在热映</span>
-      <span @click="future" class="future" :class="{active : route.path==='/movie/future'}">即将上映</span>
-    </div>
-    <RouterView />
+    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+      <el-tab-pane label="正在热映" name="/movie"> <RouterView /></el-tab-pane>
+      <el-tab-pane label="即将上映" name="/movie/future"><RouterView /></el-tab-pane>
+    </el-tabs>
+    
   </div>
 </template>
 
@@ -27,23 +25,7 @@ const future = () =>{
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 40px 20px;
+  /* height: auto; */
 }
-.movie>div{
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid rgb(212, 209, 209);
-}
-.movie span{
-  font-size: 16px;
-  color: #999;
-  cursor: pointer;
-  padding-bottom: 10px;
-}
-.hot{
-  margin-right: 10px;
-}
-.movie .active{
-  color: blue;
-  border-bottom: 1px solid blue;
-}
+
 </style>

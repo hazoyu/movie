@@ -61,7 +61,7 @@ onMounted(() => {
                 <p class="notice1">预告片</p>
                 <p class="notice2">预售</p>
               </div>
-              <div class="release">{{i.rel}}</div>
+              <div class="release">{{ i.rel }}</div>
             </div>
 
           </div>
@@ -94,6 +94,7 @@ onMounted(() => {
 <style scoped>
 .home {
   padding: 60px 0;
+  height:1450px;
 }
 
 .content {
@@ -134,15 +135,19 @@ onMounted(() => {
 .count {
   color: blue;
 }
-.hot-title ,.future-title{
+
+.hot-title,
+.future-title {
   display: flex;
   justify-content: space-between;
 }
+
 h2 {
   /* color:hsl(242, 89%, 50%); */
   color: blue;
 }
-.all{
+
+.all {
   font-size: 12px;
   line-height: 30px;
   color: skyblue;

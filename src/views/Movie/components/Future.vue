@@ -48,7 +48,7 @@ const currentchange = ()=>{
   display: flex;
   /* justify-content: space-between; */
   flex-wrap: wrap;
-  
+  height: 1450px;
 }
 
 .movie-poster {
@@ -108,10 +108,7 @@ const currentchange = ()=>{
   border-top: 1px solid rgb(232, 231, 231);
   color: #999;
 }
-.layout{
-  width: 300px;
-  margin: 0 auto;
-}
+
 .detail {
   position: absolute;
   display: flex;

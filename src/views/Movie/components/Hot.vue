@@ -45,7 +45,7 @@ const currentchange = () => {
   display: flex;
   /* justify-content: space-between; */
   flex-wrap: wrap;
-
+  height: 1200px;
 }
 
 .movie-poster {
@@ -143,8 +143,5 @@ const currentchange = () => {
   }
 }
 
-.layout {
-  width: 150px;
-  margin: 0 auto;
-}
+
 </style>
