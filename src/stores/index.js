@@ -1,5 +1,7 @@
 import { ref, computed,watch } from 'vue'
 import { defineStore } from 'pinia'
+import { getSaveAPI } from '@/apis/user';
+
 
 
 function init () {
@@ -10,21 +12,40 @@ function init () {
 }
 
 export const useAllDataStore = defineStore('allAata', () => {
-  const state = ref((init()))
+  const state = ref(init())
 
   watch(state,(newObj)=>{
-    if(!newObj.user) return
+    if(!newObj?.user) return
     localStorage.setItem('store',JSON.stringify(newObj))
   },{
     deep:true
   })
 
   const stored = ()=>{
-    state.value=JSON.parse(localStorage.getItem('store'))
+    if (JSON.parse(localStorage.getItem('store'))){
+      state.value=JSON.parse(localStorage.getItem('store'))
+    }
   }
-
+  const save = async (data)=>{
+    const {id} = state.value.user
+    const data2 ={}
+    Object.assign(data2,{...data,id})
+    const res = await getSaveAPI(data2)
+    console.log(state.value.user);
+    if (res) {
+      state.value.user.name = data.name
+      state.value.user.sex = data.sex
+      state.value.user.birth = data.birth
+      state.value.user.phone = data.phone
+      ElMessage({
+        type:'success',
+        message:"修改成功"
+      })
+    }
+  }
   return {
     state,
-    stored
+    stored,
+    save
   }
 })

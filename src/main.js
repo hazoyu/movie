@@ -17,5 +17,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(createPinia())
 app.use(router)
 const store = useAllDataStore()
-store.stored()
+store.stored("refresh")
 app.mount('#app')

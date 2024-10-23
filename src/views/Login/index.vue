@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 import { getUserAPI } from '@/apis/login';
 import { useAllDataStore } from '@/stores';
 
+const route = useRoute()
 const stoer = useAllDataStore()
 const router = useRouter()
 const formRef = ref(null)
@@ -33,15 +34,20 @@ const rules = {
   ]
 }
 
+let aa = {}
 
 const doLogin = () => {
   const { username, password } = form.value
   formRef.value.validate(async (valid) => {
     if (valid) {
       const res = await getUserAPI({ username, password })
+      console.log(res.result);
+      console.log(stoer.state);
+      console.log(route.path);
       stoer.state.user = res.result
+
       ElMessage({ type: 'success', message: '登录成功' })
-      router.replace({ path: '/' })
+      router.replace({ path: '/home' })
 
     }
   })

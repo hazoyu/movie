@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from 'vue'
 import { useAllDataStore } from '@/stores';
+
 const store = useAllDataStore()
 const form = reactive({
   name: store.state.user.username,
@@ -10,8 +11,7 @@ const form = reactive({
 })
 
 const save = () => {
-  store.state.user = form
-  console.log(store.state.user);
+  store.save(form)
 }
 </script>
 
