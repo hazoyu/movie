@@ -41,9 +41,7 @@ const doLogin = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       const res = await getUserAPI({ username, password })
-      console.log(res.result);
       stoer.state.user = res.result
-
       ElMessage({ type: 'success', message: '登录成功' })
       router.replace({ path: '/home' })
 

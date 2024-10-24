@@ -13,12 +13,17 @@ const form = reactive({
 const save = () => {
   store.save(form)
 }
-const imageUrl = computed(()=>store.state.user.avatar)
+const imageUrl = computed(()=>{
+  if (store.state.user.avatar){
+    return new URL(store.state.user.avatar,import.meta.url).href
+  }
+})
 // 上传用户头像涉及的变量
 
 const handleSuccess = (response, file) => {
-  store.state.user.avatar = URL.createObjectURL(file.raw);
-  console.log(imageUrl.value);
+  console.log(response);
+  // store.state.user.avatar = URL.createObjectURL(file.raw);
+  store.state.user.avatar = `../../../assets/images/${response}`
   ElMessage.success('头像上传成功');
 };
 
