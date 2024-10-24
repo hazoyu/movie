@@ -7,7 +7,8 @@ import { getSaveAPI } from '@/apis/user';
 function init () {
   return {
     isCollapse:false, //折叠
-    user:null,
+    user:null
+    
   }
 }
 
@@ -27,11 +28,12 @@ export const useAllDataStore = defineStore('allAata', () => {
     }
   }
   const save = async (data)=>{
-    const {id} = state.value.user
+    const {id,avatar} = state.value.user
     const data2 ={}
-    Object.assign(data2,{...data,id})
+    Object.assign(data2,{...data,id,avatar})
     const res = await getSaveAPI(data2)
-    console.log(state.value.user);
+    console.log(state.value.user,avatar);
+    console.log(res);
     if (res) {
       state.value.user.name = data.name
       state.value.user.sex = data.sex

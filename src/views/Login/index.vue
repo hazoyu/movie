@@ -42,8 +42,6 @@ const doLogin = () => {
     if (valid) {
       const res = await getUserAPI({ username, password })
       console.log(res.result);
-      console.log(stoer.state);
-      console.log(route.path);
       stoer.state.user = res.result
 
       ElMessage({ type: 'success', message: '登录成功' })

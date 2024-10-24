@@ -10,7 +10,7 @@ export const getRegisterAPI = ({username,password}) =>{
   })
 }
 
-export const getSaveAPI = ({id,username,birth,sex,phone}) =>{
+export const getSaveAPI = ({id,username,birth,sex,phone,avatar}) =>{
   return request({
     url:'/login/save',
     method:"POST",
@@ -19,7 +19,8 @@ export const getSaveAPI = ({id,username,birth,sex,phone}) =>{
       username,
       birth,
       sex,
-      phone
+      phone,
+      avatar
     }
   })
 }

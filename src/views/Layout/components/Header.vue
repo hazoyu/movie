@@ -17,7 +17,7 @@ const user = computed(()=>stoer.state?.user.username)
       <div class="nav">
         <img class="logo" src="../../../assets/images/2.png" alt="">
                
-        <RouterLink :class="{ active: route.path === '/' }" to="/" >首页</RouterLink>
+        <RouterLink :class="{ active: route.path === '/' }" to="/home" >首页</RouterLink>
 
         <RouterLink :class="{ active: route.path.slice(0, 6) === '/movie' }" to="/movie">电影</RouterLink>
         <!-- <RouterLink :class="{ active: route.path === '/cinema' }" to="/cinema">影院</RouterLink> -->
