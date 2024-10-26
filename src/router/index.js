@@ -39,16 +39,6 @@ const router = createRouter({
         {
           path: '/movie',
           component: Movie,
-          children:[
-            {
-              path: '',
-              component: Hot
-            },
-            {
-              path: 'future',
-              component: Future
-            },
-          ]
         },
         // {
         //   path: 'cinema',
