@@ -1,6 +1,6 @@
 import { ref, computed,watch } from 'vue'
 import { defineStore } from 'pinia'
-import { getSaveAPI } from '@/apis/user';
+import { getSaveAPI,getNewAPI } from '@/apis/user';
 
 
 
@@ -8,7 +8,6 @@ function init () {
   return {
     isCollapse:false, //折叠
     user:null
-    
   }
 }
 
@@ -32,10 +31,10 @@ export const useAllDataStore = defineStore('allAata', () => {
     const data2 ={}
     Object.assign(data2,{...data,id,avatar})
     const res = await getSaveAPI(data2)
-    console.log(state.value.user,avatar);
+    console.log(state.value.user);
     console.log(res);
     if (res) {
-      state.value.user.name = data.name
+      state.value.user.username = data.username
       state.value.user.sex = data.sex
       state.value.user.birth = data.birth
       state.value.user.phone = data.phone
@@ -45,9 +44,26 @@ export const useAllDataStore = defineStore('allAata', () => {
       })
     }
   }
+
+  const revise = async (password)=>{
+    const {id} = state.value.user
+    const data ={}
+    Object.assign(data,{password,id})
+    console.log(data);
+    const res = await getNewAPI(data)
+    console.log(res);
+    if (res) {
+      state.value.user.password = password
+      ElMessage({
+        type:'success',
+        message:"修改成功"
+      })
+    }
+  }
   return {
     state,
     stored,
-    save
+    save,
+    revise
   }
 })

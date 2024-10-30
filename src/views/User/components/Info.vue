@@ -5,14 +5,14 @@ import { ElMessage } from 'element-plus';
 const store = useAllDataStore()
 const formRef = ref(null)
 const form = reactive({
-  name: store.state.user.username,
+  username: store.state.user.username,
   sex: store.state.user.sex,
   birth: store.state.user.birth,
   phone: store.state.user.phone,
 })
 
 const rules = reactive({
-  name: [
+  username: [
     {
       validator: (rule, value, callback) => {
         if (value === '') {
@@ -76,8 +76,8 @@ const beforeUpload = (rawFile) => {
 
 
     <el-form ref="formRef" :model="form" :rules="rules">
-      <el-form-item prop="name" label="名称">
-        <el-input v-model="form.name" clearable />
+      <el-form-item prop="username" label="名称">
+        <el-input v-model="form.username" clearable />
       </el-form-item>
       <el-form-item label="性别">
         <el-select v-model="form.sex" placeholder="选择性别" clearable>
