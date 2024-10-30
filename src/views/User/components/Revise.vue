@@ -15,7 +15,7 @@ const rules = reactive({
         if (value === store.state.user.password) {
           callback()
         } else if (value === '') {
-          callback()
+          callback(new Error('旧密码不能为空'))
         } else  {
           callback(new Error('与原密码不一致'))
         }
