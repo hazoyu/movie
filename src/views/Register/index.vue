@@ -39,7 +39,7 @@ const doRegister = () => {
   })
 }
 const back = () => {
-  router.replace({ path: '/login' })
+  router.replace({ path: '/' })
 }
 </script>
 

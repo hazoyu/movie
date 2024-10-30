@@ -52,7 +52,7 @@ const confirm = ()=>{
 </script>
 
 <template>
-  <div class="order">
+  <div class="revise">
     <p class="title">修改密码</p>
     <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item prop="oldPassword" label="旧密码">
@@ -72,7 +72,7 @@ const confirm = ()=>{
 </template>
 
 <style  scoped lang="less">
-.order{
+.revise{
   width: 1100px;
   height: 500px;
   padding: 20px;

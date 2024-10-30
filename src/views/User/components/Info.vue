@@ -28,12 +28,12 @@ const rules = reactive({
   ]
 })
 const save = () => {
-  formRef.value.validate(async (valid)=>{
-    if(valid){ //表单校验通过
+  formRef.value.validate(async (valid) => {
+    if (valid) { //表单校验通过
       await store.save(form)
     }
   })
-  
+
 }
 const imageUrl = computed(() => {
   if (store.state.user.avatar) {
@@ -65,16 +65,16 @@ const beforeUpload = (rawFile) => {
 </script>
 
 <template>
-  <div class="order">
-    <el-upload class="avatar-uploader" action="http://localhost:8002/login/upload" :show-file-list="false"
+  <div class="info">
+    <p class="title">基本信息</p>
+    <div style="display: flex;">
+      <el-upload class="avatar-uploader" action="http://localhost:8002/login/upload" :show-file-list="false"
       :on-success="handleSuccess" :before-upload="beforeUpload">
       <img v-if="imageUrl" :src="imageUrl" class="avatar" />
       <el-icon v-else class="avatar-uploader-icon">
         <Plus />
       </el-icon>
     </el-upload>
-
-
     <el-form ref="formRef" :model="form" :rules="rules">
       <el-form-item prop="username" label="名称">
         <el-input v-model="form.username" clearable />
@@ -95,16 +95,23 @@ const beforeUpload = (rawFile) => {
         <el-button type="primary" @click="save">保存</el-button>
       </el-form-item>
     </el-form>
+    </div>
   </div>
 </template>
 
 <style scoped lang="less">
-.order {
-  display: flex;
+.info {
+  // display: flex;
   width: 1100px;
   height: 500px;
   padding: 20px;
   overflow: auto;
+
+  .title {
+    color: hsla(242, 89%, 50%, 0.5);
+    border-bottom: 1px solid rgb(225, 224, 224);
+    padding-bottom: 10px;
+  }
 
   .el-form {
     width: 400px;
@@ -114,12 +121,6 @@ const beforeUpload = (rawFile) => {
       margin: 0 auto;
     }
   }
-}
-
-.title {
-  color: hsla(242, 89%, 50%, 0.5);
-  border-bottom: 1px solid rgb(225, 224, 224);
-  padding-bottom: 10px;
 }
 
 .avatar-uploader {
