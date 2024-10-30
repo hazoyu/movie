@@ -5,8 +5,6 @@ import Admin from '@/views/Admin/index.vue'
 import Layout from '@/views/Layout/index.vue'
 import Movie from '@/views/Movie/index.vue'
 // import Cinema from '@/views/Cinema/index.vue'
-import Hot from '@/views/Movie/components/Hot.vue'
-import Future from '@/views/Movie/components/Future.vue'
 import User from '@/views/User/index.vue'
 import UserM from '@/views/UserM/index.vue'
 import MovieM from '@/views/MovieM/index.vue'
@@ -15,6 +13,8 @@ import Register from '@/views/Register/index.vue'
 import Order from '@/views/User/components/Order.vue'
 import Info from '@/views/User/components/Info.vue'
 import Revise from '@/views/User/components/Revise.vue'
+import Detail from "@/views/Detail/index.vue"
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -61,6 +61,10 @@ const router = createRouter({
               component: Revise
             },
           ]
+        },
+        {
+          path: '/detail',
+          component: Detail,
         },
       ]
     },

@@ -41,7 +41,7 @@ export const useAllDataStore = defineStore('allAata', () => {
       state.value.user.phone = data.phone
       ElMessage({
         type:'success',
-        message:"修改成功"
+        message:"保存成功"
       })
     }
   }
