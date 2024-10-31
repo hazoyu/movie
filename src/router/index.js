@@ -63,7 +63,7 @@ const router = createRouter({
           ]
         },
         {
-          path: '/detail',
+          path: '/detail/:id',
           component: Detail,
         },
       ]

@@ -27,6 +27,7 @@ const route = useRoute()
   height: 100%;
 }
 .el-header{
+    height: 80px;
     background-color: #333;
   }
 /* .admin{

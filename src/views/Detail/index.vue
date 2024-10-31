@@ -1,5 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import {getMovieDetailAPI} from '@/apis/movie'
+const route = useRoute()
+const detail = ref({})
+const getDetail =async ()=>{
+  const res = await getMovieDetailAPI(route.params.id)
+  detail.value = res
+  console.log(detail.value);
+}
 
 const tabs = [
   {
@@ -35,25 +44,31 @@ const cinemaNmae = ref('')
 const cinema = ref({})
 const handleCin = (item)=>{
   cinema.value=item
-  console.log(cinema.value);
+  console.log(route.params.id);
 }
+
+onMounted(()=>{
+  getDetail()
+})
 </script>
 
 <template>
   <div class="detail">
     <div class="banner">
       <div class="container">
-        <img src="../../assets/images/220.jpeg" alt="">
+        <img :src="detail.url" alt="">
         <div class="info">
-          <h2>志愿军：存亡之战</h2>
-          <p>类型：剧情 战争</p>
-          <p>中国大陆/144分钟</p>
-          <p>语言：汉语</p>
+          <h2>{{ detail.title }}</h2>
+          <p>{{ detail.director }}</p>
+          <p>{{ detail.kind }}</p>
+          <p>{{ detail.region }}</p>
+          <p>{{ detail.length }}</p>
+          <p>{{ detail.language }}</p>
           <p>2024-09-30 18：00中国大陆上映</p>
         </div>
         <div class="score">
           <p>用户评分</p>
-          <p style="color: #ffc600;">9.9</p>
+          <p style="color: #ffc600;">{{ detail.score }}</p>
         </div>
       </div>
     </div>

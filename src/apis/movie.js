@@ -17,3 +17,12 @@ export const getMovieBoxOfficeAPI = () =>{
     url:'/movieboxoffice/list'
   })
 }
+
+export const getMovieDetailAPI = (id) =>{
+  return request({
+    url:'/moviehot2/getById',
+    params:{
+      id
+    }
+  })
+}

@@ -1,6 +1,8 @@
 <script setup>
 import { getMovieHotAPI, getMovieFutureAPI, getMovieBoxOfficeAPI } from '@/apis/movie'
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const hotList = ref([])
 const futureList = ref([])
 const boxOfficeList = ref([])
@@ -17,7 +19,9 @@ const getboxOfficeList = async () => {
   const res = await getMovieBoxOfficeAPI()
   boxOfficeList.value = res
 }
-
+const buy = (id)=>{
+  router.push(`/detail/${id}`)
+}
 onMounted(() => {
   getHotList(),
     getfutureList(),
@@ -42,7 +46,7 @@ onMounted(() => {
                 <span class="score">{{ i.score }}</span>
               </p>
               <!-- <span class="buy">购买</span> -->
-              <p class="buy">购买</p>
+              <p class="buy" @click="buy(i.id)">购买</p>
             </div>
           </div>
         </div>
