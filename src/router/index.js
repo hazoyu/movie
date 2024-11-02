@@ -4,7 +4,8 @@ import Home from '@/views/Home/index.vue'
 import Admin from '@/views/Admin/index.vue'
 import Layout from '@/views/Layout/index.vue'
 import Movie from '@/views/Movie/index.vue'
-// import Cinema from '@/views/Cinema/index.vue'
+import Future from '@/views/Movie/components/Future.vue'
+import Hot from '@/views/Movie/components/Hot.vue'
 import User from '@/views/User/index.vue'
 import UserM from '@/views/UserM/index.vue'
 import MovieM from '@/views/MovieM/index.vue'
@@ -39,6 +40,16 @@ const router = createRouter({
         {
           path: '/movie',
           component: Movie,
+          children:[
+            {
+              path: '',
+              component: Hot
+            },
+            {
+              path: 'future',
+              component: Future
+            },
+          ]
         },
         // {
         //   path: 'cinema',
@@ -93,7 +104,13 @@ const router = createRouter({
     },
 
     
-  ]
+  ],
+  //路由滚动行为定制 切换页面自动到顶部
+  scrollBehavior(){
+    return{
+      top:0
+    }
+  }
 })
 
 export default router

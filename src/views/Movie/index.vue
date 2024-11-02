@@ -1,16 +1,35 @@
 <script setup>
 import { ref } from 'vue';
-import Future from './components/Future.vue';
-import Hot from './components/Hot.vue';
-const activeName = ref('/movie')
-
+import { useRoute,useRouter } from 'vue-router';
+const route = useRoute()
+const router = useRouter()
+const activeName = ref(route.path)
+const label = ref([
+  {
+    label:"正在热映",
+    name:"/movie"
+  },
+  {
+    label:"即将上映",
+    name:"/movie/future",
+  }
+])
+const click = (pane)=>{
+  activeName.value = pane.props.name
+  router.push(pane.props.name)
+}
 </script>
 
 <template>
   <div class="movie container">
-    <el-tabs v-model="activeName" class="demo-tabs" >
-      <el-tab-pane label="正在热映" name="/movie"> <Hot /></el-tab-pane>
-      <el-tab-pane label="即将上映" name="/movie/future"><Future /></el-tab-pane>
+    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="click" >
+      <el-tab-pane 
+      v-for="item in label"
+      :label="item.label" 
+      :name="item.name"
+      > 
+      <RouterView />
+      </el-tab-pane>
     </el-tabs>
     
   </div>
