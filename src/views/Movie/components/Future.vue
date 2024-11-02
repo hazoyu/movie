@@ -68,7 +68,7 @@ const currentchange = ()=>{
   position: absolute;
   font-size: 18px;
   color: white;
-  top: -1px;
+  /* top: -1px; */
   width: 100%;
   height: 220px;
   padding: 0 10px;
