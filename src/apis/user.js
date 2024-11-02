@@ -35,3 +35,9 @@ export const getNewAPI = ({id,password}) =>{
     }
   })
 }
+
+export const getUserDataAPI = () =>{
+  return request({
+    url:'/login/list',
+  })
+}
