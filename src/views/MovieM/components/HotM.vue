@@ -33,6 +33,11 @@ const movieLabel = reactive([
     prop: 'length',
     label: '时长',
   },
+  {
+    prop: 'score',
+    label: '评分',
+    width:100
+  },
 ])
 
 const movieList = ref([])
