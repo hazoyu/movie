@@ -33,3 +33,9 @@ export const getHotMovieAPI = () =>{
     url:'/moviehot2/list',
   })
 }
+//获取即将上映
+export const getFutureMovieAPI = () =>{ 
+  return request({
+    url:'/moviefuture/list',
+  })
+}

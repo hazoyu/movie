@@ -8,12 +8,12 @@ const movieLabel = reactive([
   {
     prop: 'title',
     label: '电影名称',
-    width: 255
+    width: 200
   },
   {
     prop: 'director',
     label: '导演',
-    width: 255
+    width: 200
   },
   {
     prop: 'kind',
@@ -27,6 +27,7 @@ const movieLabel = reactive([
   {
     prop: 'language',
     label: '语言',
+    width:200
   },
   {
     prop: 'length',
