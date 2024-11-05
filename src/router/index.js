@@ -9,6 +9,8 @@ import Hot from '@/views/Movie/components/Hot.vue'
 import User from '@/views/User/index.vue'
 import UserM from '@/views/UserM/index.vue'
 import MovieM from '@/views/MovieM/index.vue'
+import HotM from '@/views/MovieM/components/HotM.vue'
+import FutureM from '@//views/MovieM/components/FutureM.vue'
 import CinemaM from '@/views/CinemaM/index.vue'
 import Register from '@/views/Register/index.vue'
 import Order from '@/views/User/components/Order.vue'
@@ -90,9 +92,14 @@ const router = createRouter({
           component: UserM
         },
         {
-          path: 'moviem',
-          name:'moviem',
-          component: MovieM
+          path: 'hotm',
+          name:'hotm',
+          component: HotM
+        },
+        {
+          path: 'futurem',
+          name:'futurem',
+          component: FutureM
         },
         {
           path: 'cinemam',

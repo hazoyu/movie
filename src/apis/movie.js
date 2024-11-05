@@ -26,3 +26,10 @@ export const getMovieDetailAPI = (id) =>{
     }
   })
 }
+
+//获取热门电影
+export const getHotMovieAPI = () =>{ 
+  return request({
+    url:'/moviehot2/list',
+  })
+}
