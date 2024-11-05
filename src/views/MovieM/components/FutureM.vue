@@ -68,7 +68,7 @@ onMounted(()=>{
     <el-button type="primary" @click="handleAdd">新增</el-button>
     <el-form :inline="true" :model="form" >
         <el-form-item label="请输入">
-          <el-input  placeholder="请输入用户名"></el-input>
+          <el-input  placeholder="请输入电影名称"></el-input>
         </el-form-item>
         <el-form-item label="">
           <el-button type="primary">搜索</el-button>
