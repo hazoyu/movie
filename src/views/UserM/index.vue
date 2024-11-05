@@ -29,7 +29,7 @@ const userLabel = reactive([
 ])
 
 const userData = ref([])
-
+const currentPage = ref(1)
 const getUserData =async ()=>{
   const res = await getUserDataAPI()
   userData.value = res
@@ -71,8 +71,10 @@ onMounted(()=>{
             <el-button type="danger" size="small">删除</el-button>
           </template>
         </el-table-column>
-        
     </el-table>
+    <div class="layout">
+      <el-pagination background layout="prev, pager, next" v-model:current-page="currentPage" :total="userData.length" />
+    </div>
   </div>
 </template>
 
@@ -82,5 +84,12 @@ onMounted(()=>{
   justify-content: space-between;
   
 }
-
+.table{
+  position: relative;
+  height: 500px;
+  .layout{
+    position: absolute;
+    bottom: -50px;
+  }
+}
 </style>
