@@ -38,9 +38,7 @@ const movieList = ref([])
 
 const getHotMovieList =async ()=>{
   const res = await getHotMovieAPI()
-  console.log(res[0].kind.slice(3));
-  console.log(res[0].kind.indexOf("："));
-  res.forEach(item => {
+  res.forEach(item => {  //split切割
     item.director = item.director.split('：')[1]
     item.kind = item.kind.split('：')[1]
     item.region = item.region.split('：')[1]
