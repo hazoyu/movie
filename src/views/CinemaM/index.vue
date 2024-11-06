@@ -7,7 +7,6 @@ const movieLabel = reactive([
   {
     prop: 'id',
     label: '影院ID',
-    width: 200
   },
   {
     prop: 'name',
@@ -86,6 +85,7 @@ const movieList = ref([
   
 }
 .table{
+  margin-top: 20px;
   position: relative;
   height: 420px;
   .layout{
