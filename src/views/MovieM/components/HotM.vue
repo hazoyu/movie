@@ -120,8 +120,9 @@ const handleSearch = async()=>{
   // }else {
   //   getHotMovieList()
   // }
-   await getHotMovieList()    //需要用 await等待getHotMovieList执行完成再进行后面的操作，不然会导致为执行完
+   
   if (form.title){
+    await getHotMovieList()    //需要用 await等待getHotMovieList执行完成再进行后面的操作，不然会导致为执行完
     const Search = movieList.value.filter(item=>{
       if (item.title.indexOf(form.title) === -1) return false
       return true
