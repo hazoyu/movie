@@ -1,8 +1,10 @@
 <script setup>
-import { ref,reactive, onMounted } from 'vue';
-import { getHotMovieAPI } from '@/apis/movie';
+import { ref,reactive, onMounted,nextTick } from 'vue';
+import { getHotMovieAPI,getSaveHotMovieAPI,getnewHotMovieAPI,getDelHotMovieAPI,getMovieAPI } from '@/apis/movie';
 
-const form = ref()
+const form = reactive({
+  title:''
+})
 const currentPage = ref(1)
 const movieLabel = reactive([
   {
@@ -52,19 +54,139 @@ const movieList = ref([])
 const getHotMovieList =async ()=>{
   const res = await getHotMovieAPI()
   res.forEach(item => {  //split切割
-    item.director = item.director.split('：')[1]
-    item.kind = item.kind.split('：')[1]
-    item.region = item.region.split('：')[1]
-    item.language = item.language.split('：')[1]
-    item.length = item.length.split('：')[1]
+    Object.keys(item).forEach(key=>{   //Object.keys(obj)返回一个数组
+      if (key != 'title'){
+        const value = item[key]
+        if (typeof value === 'string' && value.includes('：')){
+          item[key] = item[key].split('：')[1]
+        }
+      }
+    })
   });
   movieList.value = res
 }
+
+const action = ref('add')
+const dialogVisible = ref(false)
+const userForm = ref(null)
+
+const formUser = reactive({
+  url:'',
+  title:'',
+  director:'',
+  kind:'',
+  region:'',
+  language:'',
+  length:'',
+  detail:'',
+  score:''
+})
+//表单校验规则
+const rules = reactive({
+  url: [{trigger: "blur" }],
+  title: [{ required: true,message: "电影名称是必填项",trigger: "blur" }],
+  director: [{ required: true, message: "导演是必填项", trigger: "blur" }],
+  kind: [{ required: true, message: "类型是必填项", trigger: "blur" },],
+  region: [{ required: true , message: "地区是必填项", trigger: "blur"}],
+  language: [{ required: true , message: "语言是必填项", trigger: "blur"}],
+  length: [{ required: true , message: "长度是必填项", trigger: "blur" },],
+  detail: [{ required: false }],
+  score: [{ required: true, message: "评分是必填项", trigger: "blur" }],
+})
+//新增
 const handleAdd = ()=>{
-
+  dialogVisible.value=true
+  action.value='add'
 }
-
-
+const getMovie =async (id)=>{
+  const res = await getMovieAPI(id)
+    const movie = [] 
+    movie.push(res)
+    movieList.value = movie
+}
+//搜索
+const handleSearch = async()=>{
+  // if (form.title){
+  //   const id = ref('')
+  //   movieList.value.forEach(item=>{
+  //     if(item.title === form.title){
+  //       getMovie(item.id)
+  //       id.value = item.id
+  //     }
+  //   })
+  //   if(!id.value){
+  //     ElMessage({ type: 'warning', message: '无该电影' })
+  //   }
+  // }else {
+  //   getHotMovieList()
+  // }
+   await getHotMovieList()    //需要用 await等待getHotMovieList执行完成再进行后面的操作，不然会导致为执行完
+  if (form.title){
+    const Search = movieList.value.filter(item=>{
+      if (item.title.indexOf(form.title) === -1) return false
+      return true
+    })
+    if (Search.length != 0){ 
+      movieList.value = Search
+    } else {
+      ElMessage({ type: 'warning', message: '无该电影' })
+    }
+    
+  }else{
+    getHotMovieList()
+  }
+}
+//编辑
+const handleUpdata = (val) =>{
+  dialogVisible.value=true
+  action.value='updata'
+  nextTick(()=>{  //nextTick确保在正确的时机进行 DOM 操作
+    Object.assign(formUser,{...val}) //assign对象合并，+''转为字符串
+  })
+}
+//删除
+const handleDelete = (val)=>{
+  let id = parseInt(val.id) //字符串转数字
+  ElMessageBox.confirm("你确定要删除吗").then(async () => {
+    await getDelHotMovieAPI(val.id)
+    ElMessage({
+      showClose: true,
+      message: '删除成功',
+      type: 'success'
+    })
+    getHotMovieList()
+  })
+}
+const handleClose = ()=>{
+  dialogVisible.value=false
+  userForm.value.resetFields() //重置表单
+  formUser.id = ''
+}
+//取消
+const handleCancel = ()=>{
+  dialogVisible.value=false
+  userForm.value.resetFields() //重置表单
+  formUser.id = ''
+}
+//确定
+const onSubmit = ()=>{
+  userForm.value.validate(async(valid)=>{
+    if (valid) {
+        if (action.value === 'add'){
+          await getnewHotMovieAPI(formUser)
+          ElMessage({ type: 'success', message: '添加成功' })
+        }else {
+          await getSaveHotMovieAPI(formUser)
+          ElMessage({ type: 'success', message: '修改成功' })
+        }
+        dialogVisible.value=false
+        userForm.value.resetFields() //重置表单
+        formUser.id = ''
+        getHotMovieList()
+      
+    }
+  })
+}
 onMounted(()=>{
   getHotMovieList()
 })
@@ -75,10 +197,10 @@ onMounted(()=>{
     <el-button type="primary" @click="handleAdd">新增</el-button>
     <el-form :inline="true" :model="form" >
         <el-form-item label="请输入">
-          <el-input  placeholder="请输入电影名称"></el-input>
+          <el-input v-model="form.title"  placeholder="请输入电影名称"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-button type="primary">搜索</el-button>
+          <el-button type="primary"   @click="handleSearch">搜索</el-button>
         </el-form-item>
     </el-form>
   </div>
@@ -93,8 +215,8 @@ onMounted(()=>{
         </el-table-column>
         <el-table-column fixed="right" label="操作" min-width="120">
           <template #="scope">
-            <el-button type="primary" size="small">编辑</el-button>
-            <el-button type="danger" size="small">删除</el-button>
+            <el-button type="primary" size="small" @click="handleUpdata(scope.row)">编辑</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
         
@@ -103,6 +225,84 @@ onMounted(()=>{
       <el-pagination background layout="prev, pager, next" v-model:current-page="currentPage" :total="movieList.length" />
     </div>
   </div>
+
+  <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增电影' : '编辑电影'" width="45%" :before-close="handleClose">
+    <!--需要注意的是设置了:inline="true"，
+		会对el-select的样式造成影响，我们通过给他设置一个class=select-clearn
+		在css进行处理
+    dialogVisible=true显示对话框
+    before-close点击关闭和点击外部时执行
+    -->
+    <el-form :inline="true" :model="formUser" :rules="rules" ref="userForm">
+      <div class="img">
+        <el-form-item  prop="url">
+          <img style="width: 100px; height: 140px;" :src="formUser.url" alt="">
+        </el-form-item>
+        <el-form-item prop="url">
+          <span>图片网址</span>
+          <el-input v-model="formUser.url" placeholder="用户名" />
+        </el-form-item>
+      </div>
+      <div>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="电影名称" prop="title">
+              <el-input v-model="formUser.title" placeholder="用户名" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+              <el-form-item label="导演" prop="director">
+                <el-input v-model="formUser.director" placeholder="导演" />
+              </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  label="类型" prop="kind">
+              <el-input v-model="formUser.kind"  placeholder="类型" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+              <el-form-item  label="地区" prop="region">
+                <el-input v-model="formUser.region"  placeholder="地区" />
+              </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="语言" prop="language">
+              <el-input v-model="formUser.language" placeholder="语言" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="时长" prop="length">
+              <el-input v-model="formUser.length" placeholder="时长" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col >
+            <el-form-item label="电影简介" prop="detail">
+              <el-input style="width: 240px" v-model="formUser.detail" type="textarea" placeholder="电影简介" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item label="评分" prop="score">
+              <el-input style="width: 50px" v-model="formUser.score" placeholder="评分" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row style="justify-content: flex-end">
+          <el-form-item>
+            <el-button type="primary" @click="handleCancel">取消</el-button>
+            <el-button type="primary" @click="onSubmit">确定</el-button>
+          </el-form-item>
+        </el-row>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <style  scoped lang="less">
@@ -124,5 +324,20 @@ onMounted(()=>{
   bottom: -150px;
   }
 }
-
+.el-form{
+  display: flex;
+  .img {
+    width: 110px;
+    height: 180px;
+    margin-right: 20px;
+    text-align: center;
+    .el-form-item{
+      margin-right: 0px;
+    }
+    .el-button{
+      position: relative;
+      bottom: -10px;
+    }
+  }
+}
 </style>

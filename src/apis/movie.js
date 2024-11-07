@@ -39,3 +39,61 @@ export const getFutureMovieAPI = () =>{
     url:'/moviefuture/list',
   })
 }
+//修改热门电影
+export const getSaveHotMovieAPI = ({url,title,score,director,kind,region,language,length,id,detail}) =>{ 
+  return request({
+    url:'/moviehot2/save',
+    method:"POST",
+    data:{
+      url,
+      title,
+      score,
+      director,
+      kind,
+      region,
+      language,
+      length,
+      id,
+      detail
+    }
+  })
+}
+//新增热门电影
+export const getnewHotMovieAPI = ({url,title,score,director,kind,region,language,length,id,detail}) =>{ 
+  return request({
+    url:'/moviehot2/new',
+    method:"POST",
+    data:{
+      url,
+      title,
+      score,
+      director,
+      kind,
+      region,
+      language,
+      length,
+      id,
+      detail
+    }
+  })
+}
+//删除热门电影
+export const getDelHotMovieAPI = (id) =>{ 
+  return request({
+    url:'/moviehot2/delOne',
+    method:"POST",
+    data:{
+      id
+    }
+    
+  })
+}
+//搜索电影
+export const getMovieAPI = (id) =>{
+  return request({
+    url:'/moviehot2/getById',
+    params:{
+      id
+    }
+  })
+}
