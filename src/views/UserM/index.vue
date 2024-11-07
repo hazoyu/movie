@@ -51,8 +51,10 @@ const getUser =async (id)=>{
 
 }
 //搜索
-const handleSearch = ()=>{
+const handleSearch = async()=>{
+
   if (form.username){
+    await getUserData()
     const id = ref('')
     userData.value.forEach(item=>{
       if(item.username === form.username){
