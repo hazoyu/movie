@@ -34,10 +34,10 @@ export const useAllDataStore = defineStore('allAata', () => {
     console.log(state.value.user);
     console.log(res);
     if (res) {
-      state.value.user.username = data.username
-      state.value.user.sex = data.sex
-      state.value.user.birth = data.birth
-      state.value.user.phone = data.phone
+      state.value.user.username = res.username
+      state.value.user.sex = res.sex
+      state.value.user.birth = res.birth
+      state.value.user.phone = res.phone
       ElMessage({
         type:'success',
         message:"保存成功"
