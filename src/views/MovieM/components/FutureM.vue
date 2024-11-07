@@ -8,7 +8,7 @@ const movieLabel = reactive([
   {
     prop: 'title',
     label: '电影名称',
-    width:200
+   
   },
   {
     prop: 'director',
@@ -26,7 +26,7 @@ const movieLabel = reactive([
   {
     prop: 'language',
     label: '语言',
-    width:200
+
   },
   {
     prop: 'length',
@@ -107,6 +107,11 @@ onMounted(()=>{
 .table{
   position: relative;
   height: 420px;
+  :deep(.cell){
+    white-space: nowrap; /* 文本强制不换行 */
+    text-overflow: ellipsis; /* 文本溢出显示省略号 */
+    overflow: hidden; /* 溢出的部分隐藏 */
+    }
   .layout{
   position: absolute;
   bottom: -150px;
