@@ -59,11 +59,11 @@ onMounted(()=>{
         <img :src="detail.url" alt="">
         <div class="info">
           <h2>{{ detail.title }}</h2>
-          <p>{{ detail.director }}</p>
-          <p>{{ detail.kind }}</p>
-          <p>{{ detail.region }}</p>
-          <p>{{ detail.length }}</p>
-          <p>{{ detail.language }}</p>
+          <p>导演：{{ detail.director }}</p>
+          <p>类型：{{ detail.kind }}</p>
+          <p>地区：{{ detail.region }}</p>
+          <p>片长：{{ detail.length }}</p>
+          <p>语言：{{ detail.language }}</p>
           <p>2024-09-30 18：00中国大陆上映</p>
         </div>
         <div class="score">

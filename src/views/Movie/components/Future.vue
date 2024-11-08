@@ -29,11 +29,11 @@ const currentchange = ()=>{
       </div>
       <div class="release">{{i.rel}}</div>
       <div class="detail">
-        <span>{{ i.director }}</span>
-        <span>{{ i.kind }}</span>
-        <span>{{ i.region }}</span>
-        <span>{{ i.language }}</span>
-        <span>{{ i.length }}</span>
+        <span>导演：{{ i.director }}</span>
+        <span>类型：{{ i.kind }}</span>
+        <span>地区：{{ i.region }}</span>
+        <span>语言：{{ i.language }}</span>
+        <span>片长：{{ i.length }}</span>
       </div>
     </div>
     
@@ -48,13 +48,14 @@ const currentchange = ()=>{
   display: flex;
   /* justify-content: space-between; */
   flex-wrap: wrap;
-  height: 1450px;
+  height: 1400px;
 }
 
 .movie-poster {
   position: relative;
   margin: 20px 0;
   display: flex;
+  height: 300px;
   flex-direction: column;
   width: 160px;
   border: 1px solid rgb(232, 231, 231);
