@@ -60,7 +60,7 @@ const getFutureMovieList =async ()=>{
         }
       } 
     })
-    if(item.rel){
+    if(item.rel){    
       if (item.rel.slice(0,4)==='上映时间'){
       item.rel = item.rel.slice(4)
     }
