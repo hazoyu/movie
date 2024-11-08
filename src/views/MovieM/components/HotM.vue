@@ -1,6 +1,6 @@
 <script setup>
 import { ref,reactive, onMounted,nextTick } from 'vue';
-import { getHotMovieAPI,getSaveHotMovieAPI,getnewHotMovieAPI,getDelHotMovieAPI,getMovieAPI } from '@/apis/movie';
+import { getHotMovieAPI,getSaveHotMovieAPI,getnewHotMovieAPI,getDelHotMovieAPI } from '@/apis/movie';
 
 const form = reactive({
   title:''
@@ -118,12 +118,7 @@ const handleAdd = ()=>{
   dialogVisible.value=true
   action.value='add'
 }
-const getMovie =async (id)=>{
-  const res = await getMovieAPI(id)
-    const movie = [] 
-    movie.push(res)
-    movieList.value = movie
-}
+
 //搜索
 const handleSearch = async()=>{
   // if (form.title){
@@ -181,13 +176,11 @@ const handleDelete = (val)=>{
 const handleClose = ()=>{
   dialogVisible.value=false
   userForm.value.resetFields() //重置表单
-  formUser.id = ''
 }
 //取消
 const handleCancel = ()=>{
   dialogVisible.value=false
   userForm.value.resetFields() //重置表单
-  formUser.id = ''
 }
 //确定
 const onSubmit = ()=>{
@@ -202,7 +195,6 @@ const onSubmit = ()=>{
         }
         dialogVisible.value=false
         userForm.value.resetFields() //重置表单
-        formUser.id = ''
         getHotMovieList()
       
     }
@@ -261,14 +253,14 @@ onMounted(()=>{
         </el-form-item>
         <el-form-item prop="url">
           <span>图片网址</span>
-          <el-input v-model="formUser.url" placeholder="用户名" />
+          <el-input v-model="formUser.url" placeholder="图片网址" />
         </el-form-item>
       </div>
       <div>
         <el-row>
           <el-col :span="12">
             <el-form-item label="电影名称" prop="title">
-              <el-input v-model="formUser.title" placeholder="用户名" />
+              <el-input v-model="formUser.title" placeholder="电影名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">

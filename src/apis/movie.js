@@ -59,7 +59,7 @@ export const getSaveHotMovieAPI = ({url,title,score,director,kind,region,languag
   })
 }
 //新增热门电影
-export const getnewHotMovieAPI = ({url,title,score,director,kind,region,language,length,id,detail}) =>{ 
+export const getnewHotMovieAPI = ({url,title,score,director,kind,region,language,length,detail}) =>{ 
   return request({
     url:'/moviehot2/new',
     method:"POST",
@@ -72,7 +72,6 @@ export const getnewHotMovieAPI = ({url,title,score,director,kind,region,language
       region,
       language,
       length,
-      id,
       detail
     }
   })
@@ -88,12 +87,52 @@ export const getDelHotMovieAPI = (id) =>{
     
   })
 }
-//搜索电影
-export const getMovieAPI = (id) =>{
+
+
+//修改即将上映电影
+export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language,length,rel,id}) =>{ 
   return request({
-    url:'/moviehot2/getById',
-    params:{
+    url:'/moviefuture/save',
+    method:"POST",
+    data:{
+      url,
+      title,
+      director,
+      kind,
+      region,
+      language,
+      length,
+      rel,
       id
     }
+  })
+}
+//新增即将上映电影
+export const getnewFutureMovieAPI = ({url,title,director,kind,region,language,length,rel}) =>{ 
+  return request({
+    url:'/moviefuture/new',
+    method:"POST",
+    data:{
+      url,
+      title,
+      director,
+      kind,
+      region,
+      language,
+      length,
+      rel,
+    }
+  })
+}
+
+//删除即将上映电影
+export const getDelFutureMovieAPI = (id) =>{ 
+  return request({
+    url:'/moviefuture/delOne',
+    method:"POST",
+    data:{
+      id
+    }
+    
   })
 }
