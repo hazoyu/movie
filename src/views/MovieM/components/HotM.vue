@@ -53,16 +53,16 @@ const movieList = ref([])
 
 const getHotMovieList =async ()=>{
   const res = await getHotMovieAPI()
-  res.forEach(item => {  //split切割
-    Object.keys(item).forEach(key=>{   //Object.keys(obj)返回一个数组
-      if (key != 'title'){
-        const value = item[key]
-        if (typeof value === 'string' && value.includes('：')){
-          item[key] = item[key].split('：')[1]
-        }
-      }
-    })
-  });
+  // res.forEach(item => {  //split切割
+  //   Object.keys(item).forEach(key=>{   //Object.keys(obj)返回一个数组
+  //     if (key != 'title'){
+  //       const value = item[key]
+  //       if (typeof value === 'string' && value.includes('：')){
+  //         item[key] = item[key].split('：')[1]
+  //       }
+  //     }
+  //   })
+  // });
   movieList.value = res
 }
 
@@ -121,21 +121,6 @@ const handleAdd = ()=>{
 
 //搜索
 const handleSearch = async()=>{
-  // if (form.title){
-  //   const id = ref('')
-  //   movieList.value.forEach(item=>{
-  //     if(item.title === form.title){
-  //       getMovie(item.id)
-  //       id.value = item.id
-  //     }
-  //   })
-  //   if(!id.value){
-  //     ElMessage({ type: 'warning', message: '无该电影' })
-  //   }
-  // }else {
-  //   getHotMovieList()
-  // }
-   
   if (form.title){
     await getHotMovieList()    //需要用 await等待getHotMovieList执行完成再进行后面的操作，不然会导致为执行完
     const Search = movieList.value.filter(item=>{
