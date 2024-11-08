@@ -90,7 +90,7 @@ export const getDelHotMovieAPI = (id) =>{
 
 
 //修改即将上映电影
-export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language,length,rel,id}) =>{ 
+export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language,length,rel,detail,id}) =>{ 
   return request({
     url:'/moviefuture/save',
     method:"POST",
@@ -103,12 +103,13 @@ export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language
       language,
       length,
       rel,
+      detail,
       id
     }
   })
 }
 //新增即将上映电影
-export const getnewFutureMovieAPI = ({url,title,director,kind,region,language,length,rel}) =>{ 
+export const getnewFutureMovieAPI = ({url,title,director,kind,region,language,length,detail,rel}) =>{ 
   return request({
     url:'/moviefuture/new',
     method:"POST",
@@ -120,6 +121,7 @@ export const getnewFutureMovieAPI = ({url,title,director,kind,region,language,le
       region,
       language,
       length,
+      detail,
       rel,
     }
   })

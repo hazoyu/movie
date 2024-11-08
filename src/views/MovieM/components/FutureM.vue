@@ -31,6 +31,11 @@ const movieLabel = reactive([
 
   },
   {
+    prop: 'detail',
+    label: '电影简介',
+    width:150
+  },
+  {
     prop: 'length',
     label: '时长',
     width: 100
@@ -38,7 +43,7 @@ const movieLabel = reactive([
   {
     prop: 'rel',
     label: '上映时间',
-    width:200
+    
   },
 ])
 
@@ -48,13 +53,16 @@ const getFutureMovieList =async ()=>{
   const res = await getFutureMovieAPI()
   res.forEach(item => {  //split切割
     Object.keys(item).forEach(key=>{   //Object.keys(obj)返回一个数组
-      if (key != 'title'){
+      if (key != 'title' || key != 'rel'){
         const value = item[key]
         if (typeof value === 'string' && value.includes('：')){
           item[key] = item[key].split('：')[1]
         }
-      }
+      } 
     })
+    if (item.rel.slice(0,4)==='上映时间'){
+      item.rel = item.rel.slice(4)
+    }
   });
   movieList.value = res
 }
@@ -268,6 +276,13 @@ onMounted(()=>{
           <el-col :span="12">
             <el-form-item label="时长" prop="length">
               <el-input v-model="formUser.length" placeholder="时长" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col >
+            <el-form-item label="电影简介" prop="detail">
+              <el-input style="width: 240px" v-model="formUser.detail" type="textarea" placeholder="电影简介" />
             </el-form-item>
           </el-col>
         </el-row>
