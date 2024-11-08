@@ -20,7 +20,7 @@ const getboxOfficeList = async () => {
   boxOfficeList.value = res
 }
 const buy = (id)=>{
-  router.push(`/detail/${id}`)
+  router.push(`/buy/${id}`)
 }
 onMounted(() => {
   getHotList(),

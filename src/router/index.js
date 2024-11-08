@@ -16,7 +16,7 @@ import Register from '@/views/Register/index.vue'
 import Order from '@/views/User/components/Order.vue'
 import Info from '@/views/User/components/Info.vue'
 import Revise from '@/views/User/components/Revise.vue'
-import Detail from "@/views/Detail/index.vue"
+import Buy from "@/views/Buy/index.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,8 +76,8 @@ const router = createRouter({
           ]
         },
         {
-          path: '/detail/:id',
-          component: Detail,
+          path: '/buy/:id',
+          component: Buy,
         },
       ]
     },
