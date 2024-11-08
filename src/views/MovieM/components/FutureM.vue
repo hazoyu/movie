@@ -60,9 +60,12 @@ const getFutureMovieList =async ()=>{
         }
       } 
     })
-    if (item.rel.slice(0,4)==='上映时间'){
+    if(item.rel){
+      if (item.rel.slice(0,4)==='上映时间'){
       item.rel = item.rel.slice(4)
     }
+    }
+    
   });
   movieList.value = res
 }
@@ -181,7 +184,6 @@ const onSubmit = ()=>{
         }
         dialogVisible.value=false
         userForm.value.resetFields() //重置表单
-        
         getFutureMovieList()
       
     }
