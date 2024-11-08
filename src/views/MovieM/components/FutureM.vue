@@ -44,12 +44,14 @@ const movieList = ref([])
 const getFutureMovieList =async ()=>{
   const res = await getFutureMovieAPI()
   res.forEach(item => {  //split切割
-    item.director = item.director.split('：')[1]
-    item.kind = item.kind.split('：')[1]
-    item.region = item.region.split('：')[1]
-    item.language = item.language.split('：')[1]
-    item.length = item.length.split('：')[1]+'分钟'
-    item.rel = item.rel.slice(4)
+    Object.keys(item).forEach(key=>{   //Object.keys(obj)返回一个数组
+      if (key != 'title'){
+        const value = item[key]
+        if (typeof value === 'string' && value.includes('：')){
+          item[key] = item[key].split('：')[1]
+        }
+      }
+    })
   });
   movieList.value = res
 }
