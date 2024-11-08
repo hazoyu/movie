@@ -39,7 +39,8 @@ onMounted(() => {
             <span class="all" @click="$router.push('/movie')">查看全部></span>
           </div>
           <div class="movie-list">
-            <div class="movie-poster" v-for="i in hotList.slice(0, 8)">
+            <!-- .slice(-8).sort((a,b)=>b.id-a.id)取后八位并排序（降序） -->
+            <div class="movie-poster" v-for="i in hotList.slice(-8).sort((a,b)=>b.id-a.id)">
               <img style="width: 100%; height: 220px;" :src="i.url" alt="">
               <p class="name">
                 <span class="title" :title="i.title">{{ i.title }}</span>
@@ -56,7 +57,8 @@ onMounted(() => {
             <span class="all" @click="$router.push('/movie/future')">查看全部></span>
           </div>
           <div class="movie-list">
-            <div class="movie-poster" v-for="i in futureList.slice(0, 8)">
+            <!-- .slice(-8).sort((a,b)=>b.id-a.id)取后八位并排序（降序） -->
+            <div class="movie-poster" v-for="i in futureList.slice(-8).sort((a,b)=>b.id-a.id)">
               <img style="width: 100%; height: 220px;" :src="i.url" alt="">
               <p class="name">
                 <span class="title" :title="i.title">{{ i.title }}</span>
@@ -192,7 +194,7 @@ h2 {
   position: absolute;
   bottom: 0px;
   left: 10px;
-  width: 80%;
+  width: 70%;
   /* 文本不换行 */
   white-space: nowrap;
   /* 超出范围隐藏 */
