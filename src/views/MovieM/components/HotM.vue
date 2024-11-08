@@ -84,7 +84,27 @@ const formUser = reactive({
 //表单校验规则
 const rules = reactive({
   url: [{trigger: "blur" }],
-  title: [{ required: true,message: "电影名称是必填项",trigger: "blur" }],
+  title: [{ required: true,validator: (rule, value, callback) => {
+                if (action.value === 'add' && value!= '') {
+                  let yes = 0
+                  movieList.value.forEach(item=>{
+                    if (item.title === value){
+                      yes = 1
+                    }
+                  })
+
+                  if (yes === 1){
+                    callback(new Error('存在该电影'))
+                  }else{
+                    callback()
+                  }
+
+                } else if (value === ''){
+                  callback(new Error('电影名称是必填项'))
+                } else {
+                  callback()
+                }
+              },trigger: "blur" }],
   director: [{ required: true, message: "导演是必填项", trigger: "blur" }],
   kind: [{ required: true, message: "类型是必填项", trigger: "blur" },],
   region: [{ required: true , message: "地区是必填项", trigger: "blur"}],
