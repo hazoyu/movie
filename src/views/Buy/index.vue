@@ -53,7 +53,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <div class="detail">
+  <div class="buy">
     <div class="banner">
       <div class="container">
         <img :src="detail.url" alt="">
@@ -106,7 +106,7 @@ onMounted(()=>{
 </template>
 
 <style lang="less" scoped>
-.detail {
+.buy {
   height: auto;
   width: 100%;
 

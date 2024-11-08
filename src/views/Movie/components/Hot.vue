@@ -16,7 +16,7 @@ const currentchange = () => {
   console.log(currentPage.value);
 }
 const buy = (id)=>{
-  router.push(`/detail/${id}`)
+  router.push(`/buy/${id}`)
 }
 </script>
 
@@ -50,7 +50,7 @@ const buy = (id)=>{
   display: flex;
   /* justify-content: space-between; */
   flex-wrap: wrap;
-  height: 1200px;
+  height: 1250px;
 }
 
 .movie-poster {
@@ -58,6 +58,7 @@ const buy = (id)=>{
   margin: 20px 0;
   display: flex;
   flex-direction: column;
+  height: 265px;
   width: 160px;
   border: 1px solid rgb(232, 231, 231);
   box-sizing: border-box;
