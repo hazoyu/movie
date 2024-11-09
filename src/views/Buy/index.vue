@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 import {getMovieDetailAPI} from '@/apis/movie'
 const route = useRoute()
+const router = useRouter()
 const detail = ref({})
 const getDetail =async ()=>{
   const res = await getMovieDetailAPI(route.params.id)
@@ -39,14 +40,14 @@ const cinemas=ref([
     ])
 const data = ref('')
 const cinemaNmae = ref('')
-// const cinemas = ref('')
-
 const cinema = ref({})
 const handleCin = (item)=>{
   cinema.value=item
   console.log(route.params.id);
 }
-
+const handle =()=>{
+  router.push(`/detail/${route.params.id}`)
+}
 onMounted(()=>{
   getDetail()
 })
@@ -64,7 +65,7 @@ onMounted(()=>{
           <p>地区：{{ detail.region }}</p>
           <p>片长：{{ detail.length }}</p>
           <p>语言：{{ detail.language }}</p>
-          <p>2024-09-30 18：00中国大陆上映</p>
+          <el-button style="margin-top: 20px;" round type="danger" @click="handle">查看更多电影详细</el-button>
         </div>
         <div class="score">
           <p>用户评分</p>

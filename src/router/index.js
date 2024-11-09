@@ -8,15 +8,15 @@ import Future from '@/views/Movie/components/Future.vue'
 import Hot from '@/views/Movie/components/Hot.vue'
 import User from '@/views/User/index.vue'
 import UserM from '@/views/UserM/index.vue'
-import MovieM from '@/views/MovieM/index.vue'
-import HotM from '@/views/MovieM/components/HotM.vue'
-import FutureM from '@//views/MovieM/components/FutureM.vue'
+import HotM from '@/views/MovieM/HotM.vue'
+import FutureM from '@//views/MovieM/FutureM.vue'
 import CinemaM from '@/views/CinemaM/index.vue'
 import Register from '@/views/Register/index.vue'
 import Order from '@/views/User/components/Order.vue'
 import Info from '@/views/User/components/Info.vue'
 import Revise from '@/views/User/components/Revise.vue'
 import Buy from "@/views/Buy/index.vue"
+import Detail from '@/views/Detail/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,10 +53,6 @@ const router = createRouter({
             },
           ]
         },
-        // {
-        //   path: 'cinema',
-        //   component: Cinema
-        // },
         {
           path: '/user',
           component: User,
@@ -78,6 +74,10 @@ const router = createRouter({
         {
           path: '/buy/:id',
           component: Buy,
+        },
+        {
+          path: '/detail/:id',
+          component: Detail,
         },
       ]
     },
