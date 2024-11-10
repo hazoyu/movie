@@ -16,6 +16,11 @@ const menuList = [
     path: "/admin/cinemam",
     icon: 'VideoCameraFilled'
   },
+  {
+    label: "评论管理",
+    path: "/admin/review",
+    icon: 'ChatDotRound'
+  },
 ]
 const menuList2 = [
 {

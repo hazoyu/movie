@@ -20,3 +20,15 @@ export const getNewReviewAPI = ({moviename,username,review,time}) =>{
     }
   })
 }
+
+//删除评论
+export const getDelReviewAPI = (id) =>{ 
+  return request({
+    url:'/reviews/delOne',
+    method:"POST",
+    data:{
+      id
+    }
+    
+  })
+}
