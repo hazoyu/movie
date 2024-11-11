@@ -25,7 +25,7 @@ const menuList = [
 const menuList2 = [
 {
     label: "电影管理",
-    path: "/admin/moviem",
+    path: "/admin/moviem1",
     icon: 'Film',
     children: [
       {
@@ -37,6 +37,25 @@ const menuList2 = [
       {
         path: '/admin/futurem',
         label: '即将上映',
+        icon: 'StarFilled',
+        url: 'Page2'
+      }
+    ]
+  },
+  {
+    label: "影厅管理",
+    path: "/admin/moviem2",
+    icon: 'HomeFilled',
+    children: [
+      {
+        path: '/admin/cinemaInfo',
+        label: '影厅信息',
+        icon: 'StarFilled',
+        url: 'Page1'
+      },
+      {
+        path: '/admin/sessionInfo',
+        label: '场次信息',
         icon: 'StarFilled',
         url: 'Page2'
       }

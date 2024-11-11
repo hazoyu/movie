@@ -112,6 +112,16 @@ const router = createRouter({
           name:'review',
           component: Review
         },
+        {
+          path: 'cinemaInfo',
+          name:'cinemaInfo',
+          component:()=>import('@/views/CinemaHall/CinemaInfo.vue'),
+        },
+        {
+          path: 'sessionInfo',
+          name:'sessionInfo',
+          component:()=>import('@/views/CinemaHall/SessionInfo.vue'),
+        },
       ]
     },
 
