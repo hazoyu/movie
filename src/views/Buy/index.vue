@@ -25,7 +25,7 @@ function newDate(time) {
   let month = (time.getMonth() + 1).toString().padStart(2, '0'); // 月
   let date = time.getDate().toString().padStart(2, '0'); // 日
   return (
-    month + "月" + date + "日"
+    month + "-" + date
   )
 }
 let getTime = new Date().getTime(); 
@@ -72,6 +72,18 @@ const handleCin = (item)=>{
 const handle =()=>{
   router.push(`/detail/${route.params.id}`)
 }
+
+const info = ref({
+  cinema:"大地影院",
+  hall:"一号厅",
+  movie:"毒液最后一舞",
+  time:"2024-11-12 13:00:00",
+  price:"30"
+})
+//点击全部
+const handleAll=()=>{
+
+}
 onMounted(()=>{
   getDetail()
 })
@@ -109,6 +121,7 @@ onMounted(()=>{
         <div class="cinema">
           <span>影院</span>
           <el-radio-group v-model="cinemaNmae" style="margin-bottom: 30px">
+            <el-radio-button :value="全部" @click="handleAll(item)">全部</el-radio-button>
             <el-radio-button v-for="item in cinemas" :value="item.name" @click="handleCin(item)">{{ item.name }}</el-radio-button>
           </el-radio-group>
         </div>
@@ -116,7 +129,7 @@ onMounted(()=>{
 
     </div>
 
-    <div class="cinInfo" v-if="cinema.name!=null">
+    <div class="cinInfo" v-if="cinema.name === info.cinema && data === info.time.slice(5,10) ">
       <div>
         <p class="title">{{cinema.name}}</p>
         <p class="addr">地址：{{ cinema.addr }}</p>

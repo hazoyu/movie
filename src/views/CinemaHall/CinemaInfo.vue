@@ -1,8 +1,11 @@
 <script setup>
-import { ref,reactive, onMounted,nextTick } from 'vue';
+import { ref,reactive,computed, onMounted,nextTick } from 'vue';
 import { getHotMovieAPI } from '@/apis/movie';
+import { useAllDataStore } from '@/stores';
 
+const store = useAllDataStore()
 const currentPage = ref(1)
+const cinemaList = computed(()=>store.state.cinemaList)
 const label = reactive([
   {
     prop: 'id',
@@ -150,7 +153,19 @@ const onSubmit = ()=>{
     <el-form :inline="true" :model="formInfo" :rules="rules" ref="form">
         <el-row>
           <el-form-item label="影院名称" prop="cinemaname">
-            <el-input v-model="formInfo.cinemaname" placeholder="影院名称" />
+            <el-select
+              v-model="formInfo.cinemaname"
+              placeholder="影院名称"
+              style="width: 210px"
+            >
+              <el-option
+                v-for="item in cinemaList"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              />
+            </el-select>
+
           </el-form-item>
         </el-row>
         <el-row>

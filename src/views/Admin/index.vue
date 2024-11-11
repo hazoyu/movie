@@ -2,7 +2,12 @@
 import { useRoute } from 'vue-router';
 import Aside from './components/Aside.vue';
 import Header from './components/Header.vue';
-const route = useRoute()
+import { useAllDataStore } from '@/stores';
+import { onMounted } from 'vue';
+const store = useAllDataStore()
+onMounted(()=>{
+    store.cinemaList()
+})
 </script>
 
 <template>
