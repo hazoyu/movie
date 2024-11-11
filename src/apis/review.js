@@ -1,6 +1,6 @@
 import request from '@/utils/http'
 
-//新增评论
+//所有评论
 export const getReviewAPI = () =>{ 
   return request({
     url:'/reviews/list',

@@ -2,15 +2,25 @@
 import { onMounted, ref } from 'vue';
 import { useRoute,useRouter } from 'vue-router';
 import {getMovieDetailAPI} from '@/apis/movie'
+import { getMovieScoreAPI } from '@/apis/score';
 const route = useRoute()
 const router = useRouter()
+// const score = ref()
 const detail = ref({})
 const getDetail =async ()=>{
   const res = await getMovieDetailAPI(route.params.id)
   detail.value = res
-  console.log(detail.value);
 }
-
+//获取电影评分
+// const getScore = async()=>{
+//   await getDetail()
+//   let a = 0
+//   const res = await getMovieScoreAPI(detail.value.title)
+//   res.forEach(item=>{
+//     a=a+(+item.score)
+//   })
+//   score.value = (a/res.length).toFixed(1)
+// }
 const tabs = [
   {
     data: '10月25日',
@@ -43,7 +53,6 @@ const cinemaNmae = ref('')
 const cinema = ref({})
 const handleCin = (item)=>{
   cinema.value=item
-  console.log(route.params.id);
 }
 const handle =()=>{
   router.push(`/detail/${route.params.id}`)
@@ -69,7 +78,8 @@ onMounted(()=>{
         </div>
         <div class="score">
           <p>用户评分</p>
-          <p style="color: #ffc600;">{{ detail.score }}</p>
+          <p style="color: #ffc600;" >{{ detail.score }}</p>
+
         </div>
       </div>
     </div>
@@ -140,7 +150,7 @@ onMounted(()=>{
       .score {
         position: absolute;
         top: 130px;
-        right: 300px;
+        left: 650px;
 
         p {
           margin-bottom: 10px;
