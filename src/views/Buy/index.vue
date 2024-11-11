@@ -21,13 +21,28 @@ const getDetail =async ()=>{
 //   })
 //   score.value = (a/res.length).toFixed(1)
 // }
+function newDate(time) {
+  let month = (time.getMonth() + 1).toString().padStart(2, '0'); // 月
+  let date = time.getDate().toString().padStart(2, '0'); // 日
+  return (
+    month + "月" + date + "日"
+  )
+}
+let getTime = new Date().getTime(); 
+let time = new Date(getTime);
+let time2 = new Date()
+time2 = time2.setDate(time2.getDate()+1)
+time2 = new Date(time2)
+let time3 = new Date()
+time3 = time3.setDate(time3.getDate()+2)
+time3 = new Date(time3)
 const tabs = [
   {
-    data: '10月25日',
+    data: newDate(time),
   }, {
-    data: '10月26日',
+    data: newDate(time2),
   }, {
-    data: '10月27日',
+    data: newDate(time3),
   }
 ]
 const cinemas=ref([
