@@ -2,7 +2,14 @@
 import { ref,reactive, onMounted,nextTick,computed } from 'vue';
 import { getSessionListAPI,getAddSessionAPI,getUpDateSessionAPI,getDelSessionAPI } from '@/apis/screen';
 import { useAllDataStore } from '@/stores';
+import {getHotMovieAPI} from '@/apis/movie'
 const store = useAllDataStore()
+
+const options = ref([])
+const getHotMovie = async() =>{
+  const res =await getHotMovieAPI()
+  options.value = res
+}
 
 const currentPage = ref(1)
 const label = reactive([
@@ -60,11 +67,11 @@ const screenList = computed(()=>store.state.screenList.filter(item=>{
 })) //影厅列表
 
 const rules = reactive({
-  cinema:[],
-  hall:[],
-  movie:[],
-  time:[],
-  price:[]
+  cinema:[{ required: true, message: "电影院是必填项", trigger: "blur" }],
+  hall:[{ required: true, message: "影厅是必填项", trigger: "blur" }],
+  movie:[{ required: true, message: "电影是必填项", trigger: "blur" }],
+  time:[{ required: true, message: "时间是必填项", trigger: "blur" }],
+  price:[{ required: true, message: "价格是必填项", trigger: "blur" }]
 })
 //新增
 const handleAdd = ()=>{
@@ -154,7 +161,8 @@ const onSubmit = ()=>{
   })
 }
 onMounted(()=>{
-  getList()
+  getList(),
+  getHotMovie()
 })
 </script>
 
@@ -200,9 +208,6 @@ onMounted(()=>{
   <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增放映厅' : '编辑放映厅'" width="25%" :before-close="handleClose">
     <el-form :inline="true" :model="formInfo" :rules="rules" ref="form">
         <el-row>
-          <!-- <el-form-item label="影院" prop="cinema">
-            <el-input v-model="formInfo.cinema" placeholder="影院名称" />
-          </el-form-item> -->
           <el-form-item label="影院" prop="cinema">
             <el-select
                 v-model="formInfo.cinema"
@@ -236,12 +241,32 @@ onMounted(()=>{
         </el-row>
         <el-row>
           <el-form-item  label="电影" prop="movie">
-            <el-input v-model="formInfo.movie"  placeholder="电影名称" />
+              <el-select
+                v-model="formInfo.movie"
+                filterable
+                placeholder="电影名称"
+                style="width: 240px"
+              >
+                <el-option
+                  v-for="item in options"
+                  :key="item.title"
+                  :label="item.title"
+                  :value="item.title"
+                />
+              </el-select>
+
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item  label="场次时间" prop="time">
-            <el-input v-model="formInfo.time"  placeholder="场次时间" />
+            <!-- <el-input v-model="formInfo.time"  placeholder="场次时间" />
+              -->
+              <el-date-picker
+                v-model="formInfo.time"
+                type="datetime"
+                placeholder="场次时间"
+                value-format="YYYY-MM-DD HH:MM"
+              />
           </el-form-item>
         </el-row>
         <el-row>
