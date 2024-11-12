@@ -1,6 +1,8 @@
 <script setup>
-import { ref,reactive, onMounted,nextTick } from 'vue';
-import { getHotMovieAPI } from '@/apis/movie';
+import { ref,reactive, onMounted,nextTick,computed } from 'vue';
+import { getSessionListAPI,getAddSessionAPI,getUpDateSessionAPI,getDelSessionAPI } from '@/apis/screen';
+import { useAllDataStore } from '@/stores';
+const store = useAllDataStore()
 
 const currentPage = ref(1)
 const label = reactive([
@@ -24,55 +26,23 @@ const label = reactive([
   {
     prop: 'time',
     label: '场次时间',
+    width:300
   },
   {
     prop: 'price',
     label: '价格',
   },
 ])
-
-const list = ref([
-  {
-    id:1,
-    cinema:"大地影院",
-    hall:"一号厅",
-    movie:'野孩子',
-    time:'2024-11-11 10:00',
-    price:'50'
-  },
-  {
-    id:2,
-    cinema:"大地影院",
-    hall:"一号厅",
-    movie:'野孩子',
-    time:'2024-11-11 10:00',
-    price:'50'
-  },
-  {
-    id:3,
-    cinema:"大地影院",
-    hall:"一号厅",
-    movie:'野孩子',
-    time:'2024-11-11 10:00',
-    price:'50'
-  },
-  {
-    id:4,
-    cinema:"大地影院",
-    hall:"一号厅",
-    movie:'野孩子',
-    time:'2024-11-11 10:00',
-    price:'50'
-  },
-  {
-    id:5,
-    cinema:"大地影院",
-    hall:"一号厅",
-    movie:'野孩子',
-    time:'2024-11-11 10:00',
-    price:'50'
-  },
-])
+const search = reactive({
+  cinemaname:"",
+  moviename:""
+})
+const list = ref([])
+//获取场次列表
+const getList =async ()=>{
+  const res =await getSessionListAPI()
+  list.value = res
+}
 const action = ref('add')
 const dialogVisible = ref(false)
 const form = ref(null)
@@ -83,6 +53,12 @@ const formInfo = reactive({
   time:'',
   price:''
 })
+const cinemaList = computed(()=>store.state.cinemaList) //影院列表
+const screenList = computed(()=>store.state.screenList.filter(item=>{
+  if (item.cinemaname === formInfo.cinema) return true
+  return false
+})) //影厅列表
+
 const rules = reactive({
   cinema:[],
   hall:[],
@@ -95,6 +71,39 @@ const handleAdd = ()=>{
   dialogVisible.value=true
   action.value='add'
 }
+//搜索
+const searchCinema = async()=>{
+  if (search.cinemaname) {
+    await getList()
+    const list2 = list.value.filter(item =>{
+      if (item.cinema.indexOf(search.cinemaname) === -1) return false
+      return true
+    })
+    if (list2.length != 0){
+      list.value = list2
+    } else {
+      ElMessage({ type: 'warning', message: '无该影院的场次' })
+    }
+  } else {
+    getList()
+  }
+}
+const searchMovie = async()=>{
+  if (search.moviename) {
+    await getList()
+    const list2 = list.value.filter(item =>{
+      if (item.movie.indexOf(search.moviename) === -1) return false
+      return true
+    })
+    if (list2.length != 0){
+      list.value = list2
+    } else {
+      ElMessage({ type: 'warning', message: '无该电影的场次' })
+    }
+  } else {
+    getList()
+  }
+}
 //编辑
 const handleUpdata = (val) =>{
   dialogVisible.value=true
@@ -106,7 +115,9 @@ const handleUpdata = (val) =>{
 //删除
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
-  ElMessageBox.confirm("你确定要删除吗").then(() => {
+  ElMessageBox.confirm("你确定要删除吗").then(async() => {
+    await getDelSessionAPI(val.id)
+    getList()
     ElMessage({
       showClose: true,
       message: '删除成功',
@@ -116,37 +127,54 @@ const handleDelete = (val)=>{
 }
 const handleClose = ()=>{
   dialogVisible.value=false
-  // userForm.value.resetFields() //重置表单
+  form.value.resetFields() //重置表单
 }
 //取消
 const handleCancel = ()=>{
   dialogVisible.value=false
-  // userForm.value.resetFields() //重置表单
+  form.value.resetFields() //重置表单
   
 }
 //确定
 const onSubmit = ()=>{
-  // userForm.value.validate(async(valid)=>{
-  //   if (valid) {
-  //       if (action.value === 'add'){
-  //         await getnewFutureMovieAPI(formUser)
-  //         ElMessage({ type: 'success', message: '添加成功' })
-  //       }else {
-  //         await getUpdataFutureMovieAPI(formUser)
-  //         ElMessage({ type: 'success', message: '修改成功' })
-  //       }
-  //       dialogVisible.value=false
-  //       userForm.value.resetFields() //重置表单
-  //       getFutureMovieList()
+  form.value.validate(async(valid)=>{
+    if (valid) {
+        if (action.value === 'add'){
+          await getAddSessionAPI(formInfo)
+          ElMessage({ type: 'success', message: '添加成功' })
+        }else {
+          await getUpDateSessionAPI(formInfo)
+          ElMessage({ type: 'success', message: '修改成功' })
+        }
+        dialogVisible.value=false
+        form.value.resetFields() //重置表单
+        getList()
       
-  //   }
-  // })
+    }
+  })
 }
+onMounted(()=>{
+  getList()
+})
 </script>
 
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
+    <el-form :inline="true" :model="search" >
+        <el-form-item label="请输入">
+          <el-input v-model="search.cinemaname"  placeholder="请输入影院名称"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary"   @click="searchCinema">搜索</el-button>
+        </el-form-item>
+        <el-form-item label="请输入">
+          <el-input v-model="search.moviename"  placeholder="请输入电影名称"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary"   @click="searchMovie">搜索</el-button>
+        </el-form-item>
+    </el-form>
   </div>
   <div class="table">
     <el-table :data="list.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">
@@ -172,13 +200,38 @@ const onSubmit = ()=>{
   <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增放映厅' : '编辑放映厅'" width="25%" :before-close="handleClose">
     <el-form :inline="true" :model="formInfo" :rules="rules" ref="form">
         <el-row>
-          <el-form-item label="影院" prop="cinema">
+          <!-- <el-form-item label="影院" prop="cinema">
             <el-input v-model="formInfo.cinema" placeholder="影院名称" />
+          </el-form-item> -->
+          <el-form-item label="影院" prop="cinema">
+            <el-select
+                v-model="formInfo.cinema"
+                placeholder="影院名称"
+                style="width: 210px"
+              >
+                <el-option
+                  v-for="item in cinemaList"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item label="影厅" prop="hall">
-            <el-input v-model="formInfo.hall" placeholder="影厅" />
+            <el-select
+                v-model="formInfo.hall"
+                placeholder="影厅"
+                style="width: 210px"
+              >
+                <el-option
+                  v-for="item in screenList"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
           </el-form-item>
         </el-row>
         <el-row>

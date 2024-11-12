@@ -2,13 +2,14 @@ import { ref, computed,watch } from 'vue'
 import { defineStore } from 'pinia'
 import { getSaveAPI,getNewAPI } from '@/apis/user';
 import { getCinemaAPI } from '@/apis/cinema';
-
+import {getScreenListAPI} from '@/apis/screen'
 
 function init () {
   return {
     isCollapse:false, //折叠
     user:null,
-    cinemaList:[]
+    cinemaList:[],
+    screenList:[]
   }
 }
 
@@ -66,12 +67,17 @@ export const useAllDataStore = defineStore('allAata', () => {
     const res = await getCinemaAPI()
     state.value.cinemaList = res
   }
-
+  //获取影厅列表
+  const screenList = async()=>{
+    const res = await getScreenListAPI()
+    state.value.screenList = res
+  }
   return {
     state,
     stored,
     save,
     revise,
-    cinemaList
+    cinemaList,
+    screenList
   }
 })

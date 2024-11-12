@@ -1,6 +1,6 @@
 <script setup>
 import { ref,reactive,computed, onMounted,nextTick } from 'vue';
-import { getHotMovieAPI } from '@/apis/movie';
+import { getAddScreenAPI,getUpDateScreenAPI,getDelScreenAPI } from '@/apis/screen';
 import { useAllDataStore } from '@/stores';
 
 const store = useAllDataStore()
@@ -25,39 +25,10 @@ const label = reactive([
     label: '影院名称',
   },
 ])
-
-const list = ref([
-  {
-    id:1,
-    name:"一号厅",
-    size:"100",
-    cinemaname:'人民影院'
-  },
-  {
-    id:2,
-    name:"二号厅",
-    size:"90",
-    cinemaname:'人民影院'
-  },
-  {
-    id:3,
-    name:"三号厅",
-    size:"100",
-    cinemaname:'大地影院'
-  },
-  {
-    id:4,
-    name:"四号厅",
-    size:"50",
-    cinemaname:'万达影院'
-  },
-  {
-    id:5,
-    name:"五号厅",
-    size:"80",
-    cinemaname:'万达影院'
-  },
-])
+const search = reactive({
+  name:""
+})
+const list = computed(()=>store.state.screenList)
 const action = ref('add')
 const dialogVisible = ref(false)
 const form = ref(null)
@@ -76,6 +47,23 @@ const handleAdd = ()=>{
   dialogVisible.value=true
   action.value='add'
 }
+//搜索
+const handleSearch = async ()=>{ 
+  if (search.name) {
+    await store.screenList()
+    const list2 = list.value.filter(item =>{
+      if (item.cinemaname.indexOf(search.name) === -1) return false
+      return true
+    })
+    if (list2.length != 0){
+      store.state.screenList = list2
+    } else {
+      ElMessage({ type: 'warning', message: '无该影院' })
+    }
+  } else {
+    store.screenList()
+  }
+}
 //编辑
 const handleUpdata = (val) =>{
   dialogVisible.value=true
@@ -87,7 +75,9 @@ const handleUpdata = (val) =>{
 //删除
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
-  ElMessageBox.confirm("你确定要删除吗").then(() => {
+  ElMessageBox.confirm("你确定要删除吗").then( async() => {
+    await getDelScreenAPI(val.id)
+    store.screenList()
     ElMessage({
       showClose: true,
       message: '删除成功',
@@ -97,37 +87,45 @@ const handleDelete = (val)=>{
 }
 const handleClose = ()=>{
   dialogVisible.value=false
-  // userForm.value.resetFields() //重置表单
+  form.value.resetFields() //重置表单
 }
 //取消
 const handleCancel = ()=>{
   dialogVisible.value=false
-  // userForm.value.resetFields() //重置表单
+  form.value.resetFields() //重置表单
   
 }
 //确定
 const onSubmit = ()=>{
-  // userForm.value.validate(async(valid)=>{
-  //   if (valid) {
-  //       if (action.value === 'add'){
-  //         await getnewFutureMovieAPI(formUser)
-  //         ElMessage({ type: 'success', message: '添加成功' })
-  //       }else {
-  //         await getUpdataFutureMovieAPI(formUser)
-  //         ElMessage({ type: 'success', message: '修改成功' })
-  //       }
-  //       dialogVisible.value=false
-  //       userForm.value.resetFields() //重置表单
-  //       getFutureMovieList()
+  form.value.validate(async(valid)=>{
+    if (valid) {
+        if (action.value === 'add'){
+          await getAddScreenAPI(formInfo)
+          ElMessage({ type: 'success', message: '添加成功' })
+        }else {
+          await getUpDateScreenAPI(formInfo)
+          ElMessage({ type: 'success', message: '修改成功' })
+        }
+        dialogVisible.value=false
+        form.value.resetFields() //重置表单
+        store.screenList()
       
-  //   }
-  // })
+    }
+  })
 }
 </script>
 
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
+    <el-form :inline="true" :model="search" >
+        <el-form-item label="请输入">
+          <el-input v-model="search.name"  placeholder="请输入影院名称"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary"   @click="handleSearch">搜索</el-button>
+        </el-form-item>
+    </el-form>
   </div>
   <div class="table">
     <el-table :data="list.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">

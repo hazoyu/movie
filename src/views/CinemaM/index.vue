@@ -17,11 +17,13 @@ const cinemaLabel = reactive([
   {
     prop: 'addr',
     label: '影院地址',
-    width: 300
+    width: 400
   },
 ])
-
-const cinemaList = computed(()=>store.state.cinemaList)
+const search = reactive({
+  name:""
+})
+let cinemaList = computed(()=>store.state.cinemaList)
 const action = ref('add')
 const dialogVisible = ref(false)
 const form = ref(null)
@@ -37,6 +39,23 @@ const rules = reactive({
 const handleAdd = ()=>{
   dialogVisible.value=true
   action.value='add'
+}
+//搜索
+const handleSearch = async ()=>{ 
+  if (search.name) {
+    await store.cinemaList()
+    const list = cinemaList.value.filter(item =>{
+      if (item.name.indexOf(search.name) === -1) return false
+      return true
+    })
+    if (list.length != 0){
+      store.state.cinemaList = list
+    } else {
+      ElMessage({ type: 'warning', message: '无该影院' })
+    }
+  } else {
+    store.cinemaList()
+  }
 }
 //编辑
 const handleUpdata = (val) =>{
@@ -91,6 +110,14 @@ const onSubmit = ()=>{
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
+    <el-form :inline="true" :model="search" >
+        <el-form-item label="请输入">
+          <el-input v-model="search.name"  placeholder="请输入影院名称"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary"   @click="handleSearch">搜索</el-button>
+        </el-form-item>
+    </el-form>
   </div>
   <div class="table">
     <el-table :data="cinemaList.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">

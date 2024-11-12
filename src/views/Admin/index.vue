@@ -7,6 +7,8 @@ import { onMounted } from 'vue';
 const store = useAllDataStore()
 onMounted(()=>{
     store.cinemaList()
+    store.screenList()
+
 })
 </script>
 
