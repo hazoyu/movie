@@ -55,6 +55,7 @@ const dialogVisible = ref(false)
 const form = ref(null)
 const formInfo = reactive({
   cinema:'',
+  addr:'',
   hall:'',
   movie:'',
   time:'',
@@ -147,6 +148,11 @@ const onSubmit = ()=>{
   form.value.validate(async(valid)=>{
     if (valid) {
         if (action.value === 'add'){
+          const a = cinemaList.value.filter(item=>{
+            if (item.name === formInfo.cinema) return true
+            return false
+          })
+          formInfo.addr = a[0].addr
           await getAddSessionAPI(formInfo)
           ElMessage({ type: 'success', message: '添加成功' })
         }else {

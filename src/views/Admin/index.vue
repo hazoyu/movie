@@ -1,15 +1,7 @@
 <script setup>
-import { useRoute } from 'vue-router';
 import Aside from './components/Aside.vue';
 import Header from './components/Header.vue';
-import { useAllDataStore } from '@/stores';
-import { onMounted } from 'vue';
-const store = useAllDataStore()
-onMounted(()=>{
-    store.cinemaList()
-    store.screenList()
 
-})
 </script>
 
 <template>

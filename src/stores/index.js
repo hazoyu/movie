@@ -3,11 +3,12 @@ import { defineStore } from 'pinia'
 import { getSaveAPI,getNewAPI } from '@/apis/user';
 import { getCinemaAPI } from '@/apis/cinema';
 import {getScreenListAPI} from '@/apis/screen'
+import { getUserAPI } from '@/apis/login';
 
 function init () {
   return {
     isCollapse:false, //折叠
-    user:null,
+    user:{},
     cinemaList:[],
     screenList:[]
   }
@@ -16,18 +17,26 @@ function init () {
 export const useAllDataStore = defineStore('allAata', () => {
   const state = ref(init())
 
-  watch(state,(newObj)=>{
-    if(!newObj?.user) return
-    localStorage.setItem('store',JSON.stringify(newObj))
-  },{
-    deep:true
-  })
+  // watch(state,(newObj)=>{
+  //   if(!newObj?.user) return
+  //   localStorage.setItem('store',JSON.stringify(newObj))
+  // },{
+  //   deep:true
+  // })
 
-  const stored = ()=>{
-    if (JSON.parse(localStorage.getItem('store'))){
-      state.value=JSON.parse(localStorage.getItem('store'))
-    }
-  }
+  // const stored = ()=>{
+  //   if (JSON.parse(localStorage.getItem('store'))){
+  //     state.value=JSON.parse(localStorage.getItem('store'))
+  //   }
+  // }
+  
+  //登录
+  const login =async ({username,password})=>{
+    const res = await getUserAPI({ username, password })
+    state.value.user = res.result
+    ElMessage({ type: 'success', message: '登录成功' })
+}
+
   const save = async (data)=>{
     const {id,avatar} = state.value.user
     const data2 ={}
@@ -74,10 +83,13 @@ export const useAllDataStore = defineStore('allAata', () => {
   }
   return {
     state,
-    stored,
+    login,
     save,
     revise,
     cinemaList,
     screenList
   }
+},
+{
+    persist: true, //持久化配置
 })

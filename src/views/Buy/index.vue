@@ -1,8 +1,12 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute,useRouter } from 'vue-router';
 import {getMovieDetailAPI} from '@/apis/movie'
+import {getSessionListAPI} from '@/apis/screen'
 import { getMovieScoreAPI } from '@/apis/score';
+import { useAllDataStore } from '@/stores';
+
+const store = useAllDataStore()
 const route = useRoute()
 const router = useRouter()
 // const score = ref()
@@ -38,54 +42,64 @@ time3 = time3.setDate(time3.getDate()+2)
 time3 = new Date(time3)
 const tabs = [
   {
-    data: newDate(time),
+    date: newDate(time),
   }, {
-    data: newDate(time2),
+    date: newDate(time2),
   }, {
-    data: newDate(time3),
+    date: newDate(time3),
   }
 ]
-const cinemas=ref([
-      {
-        name: '大地影院',
-        addr: '万达广场'
-      },
-      {
-        name: '万达影院',
-        addr: '万达广场'
-      },
-      {
-        name: '成龙影院',
-        addr: '万达广场'
-      },
-      {
-        name: '影院',
-        addr: '万达广场'
-      },
-    ])
-const data = ref('')
+const cinemas=computed(()=>store.state.cinemaList)
+const date = ref('')
 const cinemaNmae = ref('')
-const cinema = ref({})
-const handleCin = (item)=>{
-  cinema.value=item
-}
+const cinema = ref([])
+
 const handle =()=>{
   router.push(`/detail/${route.params.id}`)
 }
 
-const info = ref({
-  cinema:"大地影院",
-  hall:"一号厅",
-  movie:"毒液最后一舞",
-  time:"2024-11-12 13:00:00",
-  price:"30"
-})
+const info = ref([])
+const getSessionList = async()=>{
+  const res = await getSessionListAPI()
+  const data = res.filter(item=>{
+    if (item.movie === detail.value.title) return true
+    return false
+  })
+  info.value = data
+}
+//点击影院
+const handleCin = (item)=>{
+  const data = info.value.filter(i=>{
+    if (i.cinema === item.name && i.time.slice(5,10) === date.value) return true
+    return false
+  })
+  cinema.value = data
+}
+//点击日期
+const handleDate = (item)=>{
+  if (cinemaNmae.value != "全部"){
+    cinema.value = info.value.filter(i=>{
+    if (i.cinema === cinemaNmae.value && i.time.slice(5,10) === item.date) return true
+    return false
+    })
+  } else {
+    cinema.value = info.value.filter(i=>{
+    if (i.time.slice(5,10) === item.date) return true
+    return false
+    })
+  }
+}
 //点击全部
 const handleAll=()=>{
-
+  const data = info.value.filter(i=>{
+    if (i.time.slice(5,10) === date.value) return true
+    return false
+  })
+  cinema.value = data
 }
 onMounted(()=>{
-  getDetail()
+  getDetail(),
+  getSessionList()
 })
 </script>
 
@@ -114,14 +128,14 @@ onMounted(()=>{
       <el-card class="el-card">
         <div>
           <span>日期</span>
-          <el-radio-group v-model="data" style="margin-bottom: 30px">
-            <el-radio-button v-for="item in tabs" :value="item.data" >{{ item.data }}</el-radio-button>
+          <el-radio-group v-model="date" style="margin-bottom: 30px">
+            <el-radio-button v-for="item in tabs" :value="item.date" @click="handleDate(item)" >{{ item.date }}</el-radio-button>
           </el-radio-group>
         </div>
         <div class="cinema">
           <span>影院</span>
           <el-radio-group v-model="cinemaNmae" style="margin-bottom: 30px">
-            <el-radio-button :value="全部" @click="handleAll(item)">全部</el-radio-button>
+            <el-radio-button @click="handleAll()" value="全部" >全部</el-radio-button>
             <el-radio-button v-for="item in cinemas" :value="item.name" @click="handleCin(item)">{{ item.name }}</el-radio-button>
           </el-radio-group>
         </div>
@@ -129,13 +143,24 @@ onMounted(()=>{
 
     </div>
 
-    <div class="cinInfo" v-if="cinema.name === info.cinema && data === info.time.slice(5,10) ">
+    <div class="cinInfo" v-if="cinema.length !=0 && cinemaNmae === '全部'" v-for="item in cinema">
       <div>
-        <p class="title">{{cinema.name}}</p>
-        <p class="addr">地址：{{ cinema.addr }}</p>
+        <p class="title">{{item.cinema}}</p>
+        <p class="addr">地址：{{ item.addr }}</p>
       </div>
       <div>
-        <span class="price">￥89起</span>
+        <span class="price">￥{{item.price}}</span>
+        <el-button type="danger">点击购买</el-button>
+      </div>
+    </div>
+
+    <div class="cinInfo" v-else-if="cinema.length !=0 && cinemaNmae !== '全部'" >
+      <div>
+        <p class="title">{{cinema[0].cinema}}</p>
+        <p class="addr">地址：{{ cinema[0].addr }}</p>
+      </div>
+      <div>
+        <span class="price">￥{{cinema[0].price}}</span>
         <el-button type="danger">点击购买</el-button>
       </div>
     </div>

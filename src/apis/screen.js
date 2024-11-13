@@ -48,12 +48,13 @@ export const getSessionListAPI = () =>{
   })
 }
 //新增场次
-export const getAddSessionAPI = ({cinema,hall,movie,time,price}) =>{ 
+export const getAddSessionAPI = ({cinema,addr,hall,movie,time,price}) =>{ 
   return request({
     url:'/session/new',
     method:"POST",
     data:{
       cinema,
+      addr,
       hall,
       movie,
       time,

@@ -6,7 +6,7 @@ import { useAllDataStore } from '@/stores';
 
 const stoer = useAllDataStore()
 const route = useRoute()
-const user = computed(()=>stoer.state?.user.role)
+const user = computed(()=>stoer.state.user.role)
 
 </script>
 
