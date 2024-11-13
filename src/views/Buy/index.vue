@@ -42,16 +42,16 @@ time3 = time3.setDate(time3.getDate()+2)
 time3 = new Date(time3)
 const tabs = [
   {
-    date: newDate(time),
+    date:"今天"+ newDate(time),
   }, {
-    date: newDate(time2),
+    date:"明天"+ newDate(time2),
   }, {
-    date: newDate(time3),
+    date:"后天"+ newDate(time3),
   }
 ]
-const cinemas=computed(()=>store.state.cinemaList)
-const date = ref('')
-const cinemaNmae = ref('')
+const cinemas=computed(()=>store.state.cinemaList) //影院列表
+const date = ref("今天"+ newDate(time))
+const cinemaNmae = ref('全部')
 const cinema = ref([])
 
 const handle =()=>{
@@ -65,26 +65,32 @@ const getSessionList = async()=>{
     if (item.movie === detail.value.title) return true
     return false
   })
-  info.value = data
+  for (const item of data) { //去掉重复的电影院
+    const isArr= info.value.find((obj) => obj.cinema === item.cinema);
+    if (!isArr) {
+      info.value.push(item);
+    }
+  }
 }
 //点击影院
 const handleCin = (item)=>{
   const data = info.value.filter(i=>{
-    if (i.cinema === item.name && i.time.slice(5,10) === date.value) return true
+    if (i.cinema === item.name && i.time.slice(5,10) === date.value.slice(2,7)) return true
     return false
   })
   cinema.value = data
 }
 //点击日期
 const handleDate = (item)=>{
+
   if (cinemaNmae.value != "全部"){
     cinema.value = info.value.filter(i=>{
-    if (i.cinema === cinemaNmae.value && i.time.slice(5,10) === item.date) return true
+    if (i.cinema === cinemaNmae.value && i.time.slice(5,10) === item.date.slice(2,7)) return true
     return false
     })
   } else {
     cinema.value = info.value.filter(i=>{
-    if (i.time.slice(5,10) === item.date) return true
+    if (i.time.slice(5,10) === item.date.slice(2,7)) return true
     return false
     })
   }
@@ -92,14 +98,24 @@ const handleDate = (item)=>{
 //点击全部
 const handleAll=()=>{
   const data = info.value.filter(i=>{
-    if (i.time.slice(5,10) === date.value) return true
+    if (i.time.slice(5,10) === date.value.slice(2,7)) return true
     return false
   })
   cinema.value = data
 }
-onMounted(()=>{
-  getDetail(),
-  getSessionList()
+//点击购买
+const buy = (cinema) =>{
+  const cinema_id = ref()
+  cinemas.value.forEach(item=>{
+    if (item.name === cinema){
+      cinema_id.value = item.id
+    }
+  })
+  router.push(`/selecthall/${route.params.id}/${cinema_id.value}`)
+}
+onMounted( async()=>{
+  await getDetail(),
+  await getSessionList()
 })
 </script>
 
@@ -143,27 +159,17 @@ onMounted(()=>{
 
     </div>
 
-    <div class="cinInfo" v-if="cinema.length !=0 && cinemaNmae === '全部'" v-for="item in cinema">
+    <div class="cinInfo"  v-if="cinema != null " v-for="item in cinema">
       <div>
         <p class="title">{{item.cinema}}</p>
         <p class="addr">地址：{{ item.addr }}</p>
       </div>
       <div>
         <span class="price">￥{{item.price}}</span>
-        <el-button type="danger">点击购买</el-button>
+        <el-button type="danger" @click="buy(item.cinema)">点击购买</el-button>
       </div>
     </div>
 
-    <div class="cinInfo" v-else-if="cinema.length !=0 && cinemaNmae !== '全部'" >
-      <div>
-        <p class="title">{{cinema[0].cinema}}</p>
-        <p class="addr">地址：{{ cinema[0].addr }}</p>
-      </div>
-      <div>
-        <span class="price">￥{{cinema[0].price}}</span>
-        <el-button type="danger">点击购买</el-button>
-      </div>
-    </div>
     
     
   </div>

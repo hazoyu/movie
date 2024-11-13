@@ -24,17 +24,17 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: 'login', //登录页
       component: Login
     },
     {
       path: '/register',
-      name:'register',
+      name:'register',  //注册页
       component: Register
     },
     {
       path: '/home',
-      component: Layout,
+      component: Layout,  //首页
       children:[
         {
           path: '',
@@ -77,13 +77,17 @@ const router = createRouter({
           component: Buy,
         },
         {
+          path: '/selecthall/:movie_id/:cinema_id',
+          component: ()=>import('@/views/Buy/SelectHall.vue'),
+        },
+        {
           path: '/detail/:id',
           component: Detail,
         },
       ]
     },
     {
-      path: '/admin',
+      path: '/admin', //管理员页
       name:'admin',
       component: Admin,
       children:[
