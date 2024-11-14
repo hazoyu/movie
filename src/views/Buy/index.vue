@@ -115,7 +115,8 @@ const buy = (cinema) =>{
 }
 onMounted( async()=>{
   await getDetail(),
-  await getSessionList()
+  await getSessionList(),
+  handleAll()
 })
 </script>
 

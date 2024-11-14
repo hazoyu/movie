@@ -41,7 +41,7 @@ const tabs = [
 ]
 //获取影院
 const cinema =computed(()=> store.state.cinemaList.find((obj) => obj.id == route.params.cinema_id));
-const date = ref("今天"+ newDate(time))
+const date = ref("")
 //获取放映厅信息
 const info = ref([])
 const getSessionList = async()=>{
