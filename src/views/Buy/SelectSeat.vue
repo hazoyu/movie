@@ -23,7 +23,6 @@ const getSession = async()=>{
   const res = await getSessionAPI(route.params.session_id)
   session.value = res
   size()
-  console.log("s");
 }
 //获取影厅大小
 
@@ -54,7 +53,6 @@ const getSeat =async () =>{
     seatArr = JSON.parse(res.seat) //字符串转数组
     seatArr.forEach(item => {
       arr.value[item[0]-1][item[1]-1] = 2
-      console.log("有");
     });
     
   }else{   //无数据就创建新座位
@@ -85,22 +83,64 @@ const seat = (i,j) =>{
     }
 }
 const imageUrl = (path)=>{
-  console.log(path);
   return new URL(`../../assets/images/zuowei${path}.png`, import.meta.url).href;
 }
+function newDate(time) {
+  let year = time.getFullYear(); //年
+  let month = (time.getMonth() + 1).toString().padStart(2, '0'); // 月
+  let date = time.getDate().toString().padStart(2, '0'); // 日
+  let hour = time.getHours().toString().padStart(2, '0'); // 时
+  let minute = time.getMinutes().toString().padStart(2, '0'); // 分
+  return (
+    year+month+ date +hour+minute
+  )
+}
+let getTime = new Date().getTime(); 
+let time = new Date(getTime);
+const c = (i) =>{
+  return i < 10 ? `0${i}` : `${i}`
+}
+
+//订单对象   num < 10 ? `0${num}` : `${num}`;
+const order = ref({
+  id:'',        //订单ID：购买日期（年月日）+用户ID+电影ID+影厅ID+购买日期（时分） 20241115015201
+  movie:'',
+  cinema:'',
+  hall:'',
+  buytime:'',   //购买时间
+  time:'',      //场次时间
+  seat:'',
+  price:''
+})
+
 //点击确认选座
 const confirm =async () =>{
-  const seatString = JSON.stringify(seatArr);
-  obj.id = route.params.session_id
-  obj.seat = seatString
-  await getUpDataSeatAPI(obj)
+  if (price.value != 0 ){
+    const seatString = JSON.stringify(seatArr);
+    obj.id = route.params.session_id
+    obj.seat = seatString
+    // await getUpDataSeatAPI(obj)
+    order.value.id = newDate(time).slice(0,8)+c(store.state.user.id)+c(route.params.movie_id)+c(route.params.session_id)+newDate(time).slice(8)
+    order.value.movie = movie.value.title
+    order.value.cinema = session.value.cinema
+    order.value.hall = session.value.hall
+    order.value.buytime = newDate(time).slice(0,4)+"-"+newDate(time).slice(4,6)+"-"+newDate(time).slice(6,8)+" "+newDate(time).slice(8,10)+":"+newDate(time).slice(10,12)
+    order.value.time = session.value.time
+    order.value.seat = JSON.stringify(tags.value)
+    order.value.price = price.value
+    store.info(obj,order.value)
+    // store.saveOrder(order.value)
+    router.push("/puy")
+  } else {
+    ElMessage({ type: 'warning', message: '请选择座位' })
+  }
 }
 
 
 onMounted(async()=>{
   getDetail();
   await getSession();
-  getSeat()
+  getSeat();
 })
 
 </script>

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { getSaveAPI,getNewAPI } from '@/apis/user';
 import { getCinemaAPI } from '@/apis/cinema';
 import {getScreenListAPI} from '@/apis/screen'
+import { getOrderListAPI,getCreateOrderAPI } from '@/apis/order';
 import { getUserAPI } from '@/apis/login';
 
 function init () {
@@ -10,7 +11,10 @@ function init () {
     isCollapse:false, //折叠
     user:{},
     cinemaList:[],
-    screenList:[]
+    screenList:[],
+    orders:[],
+    order:{},
+    seat:{}
   }
 }
 
@@ -36,7 +40,7 @@ export const useAllDataStore = defineStore('allAata', () => {
     state.value.user = res.result
     ElMessage({ type: 'success', message: '登录成功' })
 }
-
+  //保存个人信息
   const save = async (data)=>{
     const {id,avatar} = state.value.user
     const data2 ={}
@@ -55,7 +59,7 @@ export const useAllDataStore = defineStore('allAata', () => {
       })
     }
   }
-
+  //修改密码
   const revise = async (password)=>{
     const {id} = state.value.user
     const data ={}
@@ -81,13 +85,35 @@ export const useAllDataStore = defineStore('allAata', () => {
     const res = await getScreenListAPI()
     state.value.screenList = res
   }
+  //获取对应用户的订单
+  const order = async ()=>{
+    const res = await getOrderListAPI()
+    state.value.orders = res
+  }
+  //保存选座的信息
+  const info = (seat,order)=>{
+    state.value.order = order
+    state.value.seat = seat
+    console.log(seat);
+    console.log(order);
+  }
+  //保存订单
+  const saveOrder = (obj) =>{
+    const res = getCreateOrderAPI(obj)
+    if (res){
+      ElMessage({ type: 'success', message: '选座成功' })
+    }
+  }
   return {
     state,
     login,
     save,
     revise,
     cinemaList,
-    screenList
+    screenList,
+    saveOrder,
+    info,
+    order
   }
 },
 {

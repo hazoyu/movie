@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getUserAPI } from '@/apis/login';
 import { useAllDataStore } from '@/stores';
 const store = useAllDataStore()
 const router = useRouter()
@@ -43,6 +42,7 @@ const doLogin = () => {
       router.replace({ path: '/home' })
       store.cinemaList()
       store.screenList()
+      store.order()
     }
   })
 }

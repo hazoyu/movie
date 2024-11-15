@@ -7,7 +7,7 @@
     <el-steps
       style="max-width: 1000px"
       :space="300"
-      :active="1"
+      :active="2"
       align-center
       finish-status="success"
     >

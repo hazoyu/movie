@@ -84,7 +84,10 @@ const router = createRouter({
           path: '/selectseat/:movie_id/:session_id',
           component: ()=>import('@/views/Buy/SelectSeat.vue'),
         },
-        
+        {
+          path: '/puy',
+          component: ()=>import('@/views/Buy/Puy.vue'),
+        },
         {
           path: '/detail/:id',
           component: Detail,

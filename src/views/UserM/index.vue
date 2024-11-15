@@ -1,6 +1,6 @@
 <script setup>
 import { ref,reactive, onMounted,nextTick } from 'vue';
-import { getUserDataAPI,getUserAPI,getSaveAPI,getDelUserAPI } from '@/apis/user';
+import { getUserDataAPI,getUserAPI,getSaveAPI,getDelUserAPI,getAddUserAPI } from '@/apis/user';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 const form = reactive({
@@ -80,7 +80,7 @@ const formUser = reactive({
   phone:'',
   role:'用户',
   birth:'',
-  id:''
+
 })
 //表单校验规则
 const rules = reactive({
@@ -121,7 +121,7 @@ const rules = reactive({
 const handleClose = ()=>{
   dialogVisible.value=false
   userForm.value.resetFields() //重置表单
-  formUser.id = ''
+
 }
 //编辑
 const handleUpdata = (val) =>{
@@ -149,25 +149,22 @@ const handleDelete = (val) =>{
 const handleCancel = ()=>{
   dialogVisible.value=false
   userForm.value.resetFields() //重置表单
-  formUser.id = ''
+
 }
 //确定
 const onSubmit = ()=>{
   userForm.value.validate(async(valid)=>{
     if (valid) {
-      const res = await getSaveAPI(formUser)
-      if (res){
         if (action.value === 'add'){
+          await getAddUserAPI(formUser)
           ElMessage({ type: 'success', message: '添加成功' })
         }else {
+          await getSaveAPI(formUser)
           ElMessage({ type: 'success', message: '修改成功' })
         }
-        
         dialogVisible.value=false
         userForm.value.resetFields()
-        formUser.id = ''
         getUserData()
-      }
     }
   })
 }

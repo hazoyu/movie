@@ -62,3 +62,18 @@ export const getDelUserAPI = (id) =>{
     }
   })
 }
+//新增用户
+export const getAddUserAPI = ({username,birth,sex,phone,password,role}) =>{
+  return request({
+    url:'/login/new',
+    method:"POST",
+    data:{
+      username,
+      birth,
+      sex,
+      phone,
+      password,
+      role
+    }
+  })
+}
