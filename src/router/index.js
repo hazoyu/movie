@@ -81,6 +81,11 @@ const router = createRouter({
           component: ()=>import('@/views/Buy/SelectHall.vue'),
         },
         {
+          path: '/selectseat/:movie_id/:session_id',
+          component: ()=>import('@/views/Buy/SelectSeat.vue'),
+        },
+        
+        {
           path: '/detail/:id',
           component: Detail,
         },

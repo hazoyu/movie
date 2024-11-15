@@ -80,6 +80,10 @@ const handleDate = (item)=>{
   })
   tableData.value = arr
 }
+//点击选座购票
+const selectSeat = (i)=>{
+  router.push(`/selectseat/${route.params.movie_id}/${i.id}`)
+}
 onMounted(async()=>{
   await getDetail(),
   await getSessionList()
@@ -122,7 +126,7 @@ onMounted(async()=>{
         <el-table-column  v-for="item in label" :prop="item.prop" :label="item.label" width="160" />
         <el-table-column fixed="right" label="选坐购票" min-width="120">
           <template #="scope">
-            <el-button type="primary" size="small">选坐购票</el-button>
+            <el-button type="primary" size="small" @click="selectSeat(scope.row)">选坐购票</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -47,6 +47,15 @@ export const getSessionListAPI = () =>{
     url:'/session/list',
   })
 }
+//按ID获取场次
+export const getSessionAPI = (id) =>{ 
+  return request({
+    url:'/session/getById',
+    params:{
+      id
+    }
+  })
+}
 //新增场次
 export const getAddSessionAPI = ({cinema,addr,hall,movie,time,price}) =>{ 
   return request({

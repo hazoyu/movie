@@ -1,6 +1,7 @@
 <script setup>
 import { ref,reactive, onMounted,nextTick,computed } from 'vue';
 import { getSessionListAPI,getAddSessionAPI,getUpDateSessionAPI,getDelSessionAPI } from '@/apis/screen';
+import { getDelSeatAPI } from '@/apis/seat';
 import { useAllDataStore } from '@/stores';
 import {getHotMovieAPI} from '@/apis/movie'
 const store = useAllDataStore()
@@ -124,7 +125,8 @@ const handleUpdata = (val) =>{
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
   ElMessageBox.confirm("你确定要删除吗").then(async() => {
-    await getDelSessionAPI(val.id)
+    await getDelSessionAPI(val.id) //删除对应场次
+    await getDelSeatAPI(val.id)    //删除对应座位列表
     getList()
     ElMessage({
       showClose: true,
