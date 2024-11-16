@@ -104,6 +104,7 @@ const c = (i) =>{
 //订单对象   num < 10 ? `0${num}` : `${num}`;
 const order = ref({
   id:'',        //订单ID：购买日期（年月日）+用户ID+电影ID+影厅ID+购买日期（时分） 20241115015201
+  user:'',
   movie:'',
   movieurl:'',
   cinema:'',
@@ -121,6 +122,7 @@ const confirm =async () =>{
     obj.id = route.params.session_id
     obj.seat = seatString
     order.value.id = newDate(time).slice(0,8)+c(store.state.user.id)+c(route.params.movie_id)+c(route.params.session_id)+newDate(time).slice(8)
+    order.value.user = store.state.user.username
     order.value.movie = movie.value.title
     order.value.movieurl = movie.value.url
     order.value.cinema = session.value.cinema

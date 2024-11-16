@@ -21,6 +21,11 @@ const menuList = [
     path: "/admin/review",
     icon: 'ChatDotRound'
   },
+  {
+    label: "订单管理",
+    path: "/admin/orderm",
+    icon: 'DocumentChecked'
+  },
 ]
 const menuList2 = [
 {

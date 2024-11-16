@@ -138,6 +138,11 @@ const router = createRouter({
           name:'sessionInfo',
           component:()=>import('@/views/CinemaHall/SessionInfo.vue'),
         },
+        {
+          path: 'orderm',
+          name:'orderm',
+          component:()=>import('@/views/OrderM/index.vue'),
+        },
       ]
     },
 

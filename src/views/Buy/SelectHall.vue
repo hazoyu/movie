@@ -42,12 +42,12 @@ const tabs = [
 //获取影院
 const cinema =computed(()=> store.state.cinemaList.find((obj) => obj.id == route.params.cinema_id));
 const date = ref("")
-//获取放映厅信息
+//获取场次信息
 const info = ref([])
 const getSessionList = async()=>{
   const res = await getSessionListAPI()
   const data = res.filter(item=>{
-    if (item.movie === movie.value.title && item.cinema === cinema.value.name) return true
+    if (item.movie === movie.value.title && item.cinema === cinema.value.name && new Date(item.time) > time) return true
     return false
   })
   info.value = data

@@ -7,12 +7,13 @@ export const getOrderListAPI = () =>{
   })
 }
 //新增订单
-export const getCreateOrderAPI = ({id,movie,movieurl,cinema,hall,buytime,time,seat,price}) =>{
+export const getCreateOrderAPI = ({id,user,movie,movieurl,cinema,hall,buytime,time,seat,price}) =>{
   return request({
     url:'/orderlist/new',
     method:"POST",
     data:{
       id,
+      user,
       movie,
       movieurl,
       cinema,
@@ -21,6 +22,16 @@ export const getCreateOrderAPI = ({id,movie,movieurl,cinema,hall,buytime,time,se
       time,
       seat,
       price
+    }
+  })
+}
+//删除订单
+export const getDelOrderAPI = (id) =>{
+  return request({
+    url:'/orderlist/delOne',
+    method:"POST",
+    data:{
+      id
     }
   })
 }
