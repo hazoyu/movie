@@ -4,6 +4,7 @@ import { getSaveAPI,getNewAPI } from '@/apis/user';
 import { getCinemaAPI } from '@/apis/cinema';
 import {getScreenListAPI} from '@/apis/screen'
 import { getOrderListAPI,getCreateOrderAPI } from '@/apis/order';
+import { getUpDataSeatAPI } from '@/apis/seat';
 import { getUserAPI } from '@/apis/login';
 
 function init () {
@@ -94,15 +95,14 @@ export const useAllDataStore = defineStore('allAata', () => {
   const info = (seat,order)=>{
     state.value.order = order
     state.value.seat = seat
-    console.log(seat);
-    console.log(order);
+  }
+  //更新场次座位
+  const updataSeat = async()=>{
+    await getUpDataSeatAPI(state.value.seat)
   }
   //保存订单
-  const saveOrder = (obj) =>{
-    const res = getCreateOrderAPI(obj)
-    if (res){
-      ElMessage({ type: 'success', message: '选座成功' })
-    }
+  const saveOrder = async () =>{
+    await getCreateOrderAPI(state.value.order)
   }
   return {
     state,
@@ -113,7 +113,8 @@ export const useAllDataStore = defineStore('allAata', () => {
     screenList,
     saveOrder,
     info,
-    order
+    order,
+    updataSeat
   }
 },
 {

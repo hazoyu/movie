@@ -119,17 +119,18 @@ const confirm =async () =>{
     const seatString = JSON.stringify(seatArr);
     obj.id = route.params.session_id
     obj.seat = seatString
-    // await getUpDataSeatAPI(obj)
     order.value.id = newDate(time).slice(0,8)+c(store.state.user.id)+c(route.params.movie_id)+c(route.params.session_id)+newDate(time).slice(8)
     order.value.movie = movie.value.title
     order.value.cinema = session.value.cinema
     order.value.hall = session.value.hall
     order.value.buytime = newDate(time).slice(0,4)+"-"+newDate(time).slice(4,6)+"-"+newDate(time).slice(6,8)+" "+newDate(time).slice(8,10)+":"+newDate(time).slice(10,12)
     order.value.time = session.value.time
-    order.value.seat = JSON.stringify(tags.value)
+    tags.value.forEach(item=>{
+      order.value.seat = order.value.seat + item.seat+" "
+    })
     order.value.price = price.value
     store.info(obj,order.value)
-    // store.saveOrder(order.value)
+    ElMessage({ type: 'success', message: '选座成功' })
     router.push("/puy")
   } else {
     ElMessage({ type: 'warning', message: '请选择座位' })

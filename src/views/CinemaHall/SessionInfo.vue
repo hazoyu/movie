@@ -273,7 +273,7 @@ onMounted(()=>{
                 v-model="formInfo.time"
                 type="datetime"
                 placeholder="场次时间"
-                value-format="YYYY-MM-DD HH:MM"
+                value-format="YYYY-MM-DD HH:mm"
               />
           </el-form-item>
         </el-row>

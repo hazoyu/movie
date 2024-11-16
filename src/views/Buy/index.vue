@@ -28,8 +28,10 @@ const getDetail =async ()=>{
 function newDate(time) {
   let month = (time.getMonth() + 1).toString().padStart(2, '0'); // 月
   let date = time.getDate().toString().padStart(2, '0'); // 日
+  let hour = time.getHours().toString().padStart(2, '0'); // 时
+  let minute = time.getMinutes().toString().padStart(2, '0'); // 分
   return (
-    month + "-" + date
+    month + "-" + date + " " +hour + ":" + minute
   )
 }
 let getTime = new Date().getTime(); 
@@ -42,15 +44,15 @@ time3 = time3.setDate(time3.getDate()+2)
 time3 = new Date(time3)
 const tabs = [
   {
-    date:"今天"+ newDate(time),
+    date:"今天"+ newDate(time).slice(0,5),
   }, {
-    date:"明天"+ newDate(time2),
+    date:"明天"+ newDate(time2).slice(0,5),
   }, {
-    date:"后天"+ newDate(time3),
+    date:"后天"+ newDate(time3).slice(0,5),
   }
 ]
 const cinemas=computed(()=>store.state.cinemaList) //影院列表
-const date = ref("今天"+ newDate(time))
+const date = ref("今天"+ newDate(time).slice(0,5))
 const cinemaNmae = ref('全部')
 const cinema = ref([])
 
@@ -62,11 +64,11 @@ const info = ref([])
 const getSessionList = async()=>{
   const res = await getSessionListAPI()
   const data = res.filter(item=>{
-    if (item.movie === detail.value.title) return true
+    if (item.movie === detail.value.title && new Date(item.time) > time) return true
     return false
   })
   for (const item of data) { //去掉重复的电影院
-    const isArr= info.value.find((obj) => obj.cinema === item.cinema);
+    const isArr= info.value.find((obj) =>obj.time.slice(0,10) === item.time.slice(0,10) && obj.cinema === item.cinema);
     if (!isArr) {
       info.value.push(item);
     }
@@ -93,6 +95,7 @@ const handleDate = (item)=>{
     if (i.time.slice(5,10) === item.date.slice(2,7)) return true
     return false
     })
+
   }
 }
 //点击全部
