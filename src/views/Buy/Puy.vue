@@ -2,6 +2,8 @@
 import { computed, onMounted, reactive, ref } from 'vue';
 import dayjs from 'dayjs'
 import { useAllDataStore } from '@/stores';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const stoer = useAllDataStore()
 const value = ref(dayjs().add(15, 'minute'))
 const label = reactive([
@@ -54,6 +56,7 @@ const confirm = () =>{
         message: '支付成功',
         type: 'success'
       })
+      router.push("/success")
   })
 }
 </script>
@@ -82,12 +85,12 @@ const confirm = () =>{
     <div class="orderInfo">
       <p class="tips">
         <component class="icons" is="WarningFilled"></component>
-        请仔细核对场次信息，出票后将<span style="color: rgb(219, 219, 102);">无法退票和改票</span>
+        请仔细核对场次信息，出票后将<span style="color: rgb(174, 174, 48);;">无法退票和改票</span>
       </p>
       <el-table :data="data"  border style="width: 100%">
         <el-table-column v-for="item in label" :prop="item.prop" :label="item.label" :width="item.width ? item.width : 190" />
       </el-table>
-      <div class="pay">
+      <div class="pay2">
         <span>实际支付：<span style="font-size: 25px; color: rgb(242, 36, 36);">{{order.price}}</span></span>
         <el-button type="danger" round @click="confirm">确认支付</el-button>
       </div>
@@ -133,7 +136,7 @@ const confirm = () =>{
         color: rgb(212, 212, 103);
       }
     }
-    .pay{
+    .pay2{
       position: absolute;
       display: flex;
       width: 150px;

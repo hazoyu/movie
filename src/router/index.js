@@ -89,6 +89,10 @@ const router = createRouter({
           component: ()=>import('@/views/Buy/Puy.vue'),
         },
         {
+          path: '/success',
+          component: ()=>import('@/views/Buy/Success.vue'),
+        },
+        {
           path: '/detail/:id',
           component: Detail,
         },
