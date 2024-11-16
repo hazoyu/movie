@@ -49,13 +49,15 @@ const confirm = () =>{
         done()
       }
     },}).then(async () => {
-      stoer.updataSeat()
-      stoer.saveOrder()
+      await stoer.updataSeat()
+      await stoer.saveOrder()
+      await stoer.order()  //获取最新订单
       ElMessage({
         showClose: true,
         message: '支付成功',
         type: 'success'
       })
+    
       router.push("/success")
   })
 }

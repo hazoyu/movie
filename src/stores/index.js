@@ -86,7 +86,7 @@ export const useAllDataStore = defineStore('allAata', () => {
     const res = await getScreenListAPI()
     state.value.screenList = res
   }
-  //获取对应用户的订单
+  //获取订单
   const order = async ()=>{
     const res = await getOrderListAPI()
     state.value.orders = res

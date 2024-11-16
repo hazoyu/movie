@@ -105,6 +105,7 @@ const c = (i) =>{
 const order = ref({
   id:'',        //订单ID：购买日期（年月日）+用户ID+电影ID+影厅ID+购买日期（时分） 20241115015201
   movie:'',
+  movieurl:'',
   cinema:'',
   hall:'',
   buytime:'',   //购买时间
@@ -121,6 +122,7 @@ const confirm =async () =>{
     obj.seat = seatString
     order.value.id = newDate(time).slice(0,8)+c(store.state.user.id)+c(route.params.movie_id)+c(route.params.session_id)+newDate(time).slice(8)
     order.value.movie = movie.value.title
+    order.value.movieurl = movie.value.url
     order.value.cinema = session.value.cinema
     order.value.hall = session.value.hall
     order.value.buytime = newDate(time).slice(0,4)+"-"+newDate(time).slice(4,6)+"-"+newDate(time).slice(6,8)+" "+newDate(time).slice(8,10)+":"+newDate(time).slice(10,12)

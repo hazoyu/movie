@@ -1,20 +1,31 @@
 <script setup>
+import { computed, onMounted, ref } from 'vue';
+import { useAllDataStore } from '@/stores';
+const store = useAllDataStore()
+
+const orderList = computed(()=>store.state.orders).value.filter(item=>{
+  if (item.id.slice(8,10) == store.state.user.id) return true
+  return false
+})
 
 </script>
 <template>
   <div class="order">
     <p class="title">我的订单</p>
-    <div class="orderList" v-for="i in 5">
-      <p class="time">2024-10-4 14:00</p>
+    <div class="orderList" v-for="item in orderList">
+      <p class="time">
+        {{ item.buytime }}
+        <span class="id">订单号：{{item.id}}</span>
+      </p> 
       <div class="orderInfo">
-        <img src="../../../assets/images/220.jpeg" alt="">
+        <img :src="item.movieurl" alt="">
         <div>
-          <span class="name">文波电影</span>
-          <span class="cinema">文波影院</span>
-          <span class="hall">文波厅</span>
-          <span class="date">2024.09.04</span>
+          <span class="name">{{ item.movie }}</span>
+          <span class="cinema">{{ item.cinema }}</span>
+          <span class="hall">{{ item.hall }} {{item.seat}}</span>
+          <span class="date">{{ item.time }}</span>
         </div>
-        <span class="price">￥999</span>
+        <span class="price">￥{{ item.price }}</span>
         <span class="state">已完成</span>
       </div>
     </div>
@@ -43,6 +54,10 @@
   line-height: 50px;
   padding-left: 10px;
 }
+.id{
+  margin-left: 40px;
+  color: #b6b6b6;
+}
 .orderInfo {
   display: flex;
   position: relative;
@@ -67,18 +82,19 @@
 .cinema,.hall{
   color: #b0b0b0;
   margin-bottom: 3px;
+  font-size: 13px;
 }
 .date{
-  color: hsla(242, 89%, 50%, 0.5);
+  color: rgb(245, 44, 44);
 }
 .price{
   position: absolute;
   top:55px;
-  right: 150px;
+  right: 250px;
 }
 .state{
   position: absolute;
   top:55px;
-  right: 40px;
+  right: 100px;
 }
 </style>

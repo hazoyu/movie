@@ -7,13 +7,14 @@ export const getOrderListAPI = () =>{
   })
 }
 //新增订单
-export const getCreateOrderAPI = ({id,movie,cinema,hall,buytime,time,seat,price}) =>{
+export const getCreateOrderAPI = ({id,movie,movieurl,cinema,hall,buytime,time,seat,price}) =>{
   return request({
     url:'/orderlist/new',
     method:"POST",
     data:{
       id,
       movie,
+      movieurl,
       cinema,
       hall,
       buytime,
