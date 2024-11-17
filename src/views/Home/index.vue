@@ -75,21 +75,21 @@ onMounted(() => {
         </div>
       </div>
       <div class="boxOffice">
-        <h2>本周票房</h2>
+        <h2>评分排行</h2>
         <div class="boxOffice-list">
-          <div class="weeklist" v-for="(i, index) in boxOfficeList.slice(0, 3)">
+          <div class="weeklist" v-for="(i, index) in hotList.sort((a,b)=>b.score-a.score).slice(0,4)" @click="buy(i.id)">
             <div>
               <span class="sort">{{ index + 1 }}</span>
               <span>{{ i.title }}</span>
             </div>
-            <span class="count">{{ i.boxoffice }}</span>
+            <span class="count">{{ i.score }}</span>
           </div>
-          <div class="weeklist" v-for="(i, index) in boxOfficeList.slice(3, 5)">
+          <div class="weeklist" v-for="(i, index) in hotList.sort((a,b)=>b.score-a.score).slice(5,9)"  @click="buy(i.id)">
             <div>
-              <span class="sort2">{{ index + 4 }}</span>
+              <span class="sort2">{{ index + 5 }}</span>
               <span>{{ i.title }}</span>
             </div>
-            <span class="count">{{ i.boxoffice }}</span>
+            <span class="count">{{ i.score }}</span>
           </div>
         </div>
       </div>
@@ -123,6 +123,10 @@ onMounted(() => {
   padding: 0 10px;
   line-height: 55px;
   font-size: 16px;
+  cursor: pointer;
+}
+.weeklist:hover{
+  color: rgb(77, 77, 246);
 }
 
 .sort {
