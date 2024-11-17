@@ -69,9 +69,6 @@ function nowDate(time) {
     year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second
   )
 }
-const imageUrl = (avatar) => {
-    return new URL(avatar, import.meta.url).href
-}
 
 const submit = () =>{
   centerDialogVisible.value = false
