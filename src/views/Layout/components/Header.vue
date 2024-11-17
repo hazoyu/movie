@@ -1,13 +1,25 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+import { useRouter,useRoute } from 'vue-router';
 import { useAllDataStore } from '@/stores';
 
 
 const stoer = useAllDataStore()
+const router = useRouter()
 const route = useRoute()
 const user = computed(()=>stoer.state.user)
 
+const out = () =>{
+  ElMessageBox.confirm("你确定要退出登录",{    confirmButtonText: '确定',
+  cancelButtonText: '取消', }).then(() => {
+    ElMessage({
+      showClose: true,
+      message: '退出成功',
+      type: 'success'
+    })
+    router.push('/')
+  })
+}
 </script>
 
 <template>
@@ -25,7 +37,7 @@ const user = computed(()=>stoer.state.user)
       <div class="user">
         <RouterLink v-show="user.role == '管理员'" to="/admin" target="_blank">管理</RouterLink>
         <RouterLink :class="{ active: route.path.slice(0, 5) === '/user' }"  to="/user">{{user.username}}</RouterLink>
-        <RouterLink class="out" to="/">退出登录</RouterLink>
+        <span class="out" @click="out">退出登录</span>
       </div>
     </div>
   </div>
@@ -65,8 +77,13 @@ a {
 }
 
 .out {
+  margin-left: 20px;
   font-size: 15px;
-  font-weight: normal;
+  font-weight: 700;
+  cursor: pointer;
+}
+.out:hover{
+  color: hsla(242, 89%, 50%, 0.5)
 }
 
 .active {

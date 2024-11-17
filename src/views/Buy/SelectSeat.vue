@@ -159,7 +159,7 @@ onMounted(async()=>{
       align-center
       finish-status="success"
     >
-      <el-step title="选择影片场次" />
+      <el-step title="选择放映厅" />
       <el-step title="选择座位" />
       <el-step title="付款" />
       <el-step title="影院取票观影" />

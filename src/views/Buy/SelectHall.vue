@@ -109,6 +109,13 @@ onMounted(async()=>{
         </p>
       </div>
     </div>
+    <div class="bread">
+      <el-breadcrumb separator=">">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: `/buy/${route.params.movie_id}` }">选择影院</el-breadcrumb-item>
+        <el-breadcrumb-item >选择放映厅</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="info">
       <h2>{{movie.title}}</h2>
       <div class="info-T">
@@ -167,10 +174,15 @@ onMounted(async()=>{
     }
 
   }
+  .bread{
+    position: absolute;
+    top:360px;
+    left: 355px;
+  }
   .info{
     width: 800px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 50px;
     height: 500px;
     .info-T{
       margin-top: 10px;

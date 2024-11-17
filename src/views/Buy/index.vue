@@ -144,6 +144,12 @@ onMounted( async()=>{
         </div>
       </div>
     </div>
+    <div class="bread">
+      <el-breadcrumb separator=">">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>购买页</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="tags-panel">
       <el-card class="el-card">
         <div>
@@ -181,6 +187,7 @@ onMounted( async()=>{
 
 <style lang="less" scoped>
 .buy {
+  position: relative;
   height: auto;
   width: 100%;
 
@@ -222,11 +229,14 @@ onMounted( async()=>{
     }
 
   }
-
+  .bread{
+    position: absolute;
+    top:330px;
+    left: 260px;
+  }
   .tags-panel {
     width: 1000px;
-    
-    margin: 50px auto;
+    margin: 80px auto;
     .el-card{
       .cinema{
         span{

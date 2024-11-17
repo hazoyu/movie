@@ -66,7 +66,7 @@ const handleSearch = async ()=>{
     if (list.length != 0){
       store.state.orders = list
     } else {
-      ElMessage({ type: 'warning', message: '无该电影的场次' })
+      ElMessage({ type: 'warning', message: '无该电影的订单' })
     }
   } else {
     store.order()
