@@ -1,31 +1,29 @@
 <script setup>
-import { getMovieHotAPI, getMovieFutureAPI, getMovieBoxOfficeAPI } from '@/apis/movie'
+import { getMovieHotAPI, getMovieFutureAPI } from '@/apis/movie'
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const hotList = ref([])
 const futureList = ref([])
-const boxOfficeList = ref([])
+const scoreRank = ref([])
 const getHotList = async () => {
   const res = await getMovieHotAPI()
   hotList.value = res
+  scoreRank.value = hotList.value.slice();
 }
+//复制一份
 
 const getfutureList = async () => {
   const res = await getMovieFutureAPI()
   futureList.value = res
 }
-const getboxOfficeList = async () => {
-  const res = await getMovieBoxOfficeAPI()
-  boxOfficeList.value = res
-}
+
 const buy = (id)=>{
   router.push(`/buy/${id}`)
 }
 onMounted(() => {
   getHotList(),
-    getfutureList(),
-    getboxOfficeList()
+  getfutureList();
 })
 </script>
 
@@ -77,14 +75,14 @@ onMounted(() => {
       <div class="boxOffice">
         <h2>评分排行</h2>
         <div class="boxOffice-list">
-          <div class="weeklist" v-for="(i, index) in hotList.sort((a,b)=>b.score-a.score).slice(0,4)" @click="buy(i.id)">
+          <div class="weeklist" v-for="(i, index) in scoreRank.sort((a,b)=>b.score-a.score).slice(0,4)" @click="buy(i.id)">
             <div>
               <span class="sort">{{ index + 1 }}</span>
               <span>{{ i.title }}</span>
             </div>
             <span class="count">{{ i.score }}</span>
           </div>
-          <div class="weeklist" v-for="(i, index) in hotList.sort((a,b)=>b.score-a.score).slice(5,9)"  @click="buy(i.id)">
+          <div class="weeklist" v-for="(i, index) in scoreRank.sort((a,b)=>b.score-a.score).slice(5,9)"  @click="buy(i.id)">
             <div>
               <span class="sort2">{{ index + 5 }}</span>
               <span>{{ i.title }}</span>
