@@ -187,12 +187,13 @@ onMounted(()=>{
     </el-form>
   </div>
   <div class="table">
-    <el-table :data="userData" style="width: 100%">
+    <el-table :data="userData" :default-sort="{ prop: 'role',order: 'descending' }" style="width: 100%">
         <el-table-column 
         v-for="item in userLabel" 
         :width="item.width ? item.width : 155" 
         :prop="item.prop" 
         :label="item.label" 
+        sortable
         >
         </el-table-column>
         <el-table-column fixed="right" label="操作" min-width="120">

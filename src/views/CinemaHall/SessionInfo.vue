@@ -199,6 +199,7 @@ onMounted(()=>{
         :width="item.width ? item.width : 155" 
         :prop="item.prop" 
         :label="item.label" 
+        sortable 
         >
         </el-table-column>
         <el-table-column fixed="right" label="操作" min-width="120">

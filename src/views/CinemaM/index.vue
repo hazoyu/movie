@@ -32,7 +32,26 @@ const formInfo = reactive({
   addr:'',
 })
 const rules = reactive({
-  name:[{ required: true, message: "名称是必填项", trigger: "blur" }],
+  name:[{ required: true,validator: (rule, value, callback) => {
+                if (action.value === 'add' && value!= '') {
+                  let yes = 0
+                  cinemaList.value.forEach(item=>{
+                    if (item.name === value){
+                      yes = 1
+                    }
+                  })
+                  if (yes === 1){
+                    callback(new Error('存在该影院'))
+                  }else{
+                    callback()
+                  }
+
+                } else if (value === ''){
+                  callback(new Error('影院名称是必填项'))
+                } else {
+                  callback()
+                }
+              }, trigger: "blur" }],
   addr:[{ required: true, message: "地址是必填项", trigger: "blur" }],
 })
 //新增
@@ -120,15 +139,16 @@ const onSubmit = ()=>{
     </el-form>
   </div>
   <div class="table">
-    <el-table :data="cinemaList.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">
+    <el-table :default-sort="{ prop: 'id' }" :data="cinemaList.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">
         <el-table-column 
         v-for="item in cinemaLabel" 
         :width="item.width ? item.width : 155" 
         :prop="item.prop" 
         :label="item.label" 
+        sortable 
         >
         </el-table-column>
-        <el-table-column fixed="right" label="操作" min-width="120">
+        <el-table-column fixed="right" label="操作" min-width="120" >
           <template #="scope">
             <el-button type="primary" size="small" @click="handleUpdata(scope.row)">编辑</el-button>
             <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>

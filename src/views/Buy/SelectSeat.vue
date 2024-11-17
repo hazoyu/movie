@@ -29,10 +29,12 @@ const getSession = async()=>{
 const size = ()=>{
   const screen = computed(()=>store.state.screenList.find((item)=>item.name === session.value.hall && item.cinemaname === session.value.cinema))
   let m = 10 , n = parseInt(screen.value.size/10)
-  arr.value = Array.from(Array(m),() => Array(n).fill(1));
+  console.log(screen.value.size);
+  arr.value = Array.from(Array(n),() => Array(m).fill(1));
   if (screen.value.size%m != 0 ){
+    console.log(screen.value.size%m);
     const a = []
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i <screen.value.size%m; i++) {
       a.push(1)
     }
     arr.value.push(a)

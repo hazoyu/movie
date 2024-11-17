@@ -38,9 +38,29 @@ const formInfo = reactive({
   cinemaname:'',
 })
 const rules = reactive({
-  name:[],
-  size:[],
-  cinemaname:[]
+  name:[{ required: true,validator: (rule, value, callback) => {
+                if (action.value === 'add' && value!= '') {
+                  let yes = 0
+                  list.value.forEach(item=>{
+                    if (formInfo.cinemaname === item.cinemaname && item.name === value){
+                      yes = 1
+                    }
+                  })
+
+                  if (yes === 1){
+                    callback(new Error('存在该放映厅'))
+                  }else{
+                    callback()
+                  }
+
+                } else if (value === ''){
+                  callback(new Error('放映厅是必填项'))
+                } else {
+                  callback()
+                }
+              }, trigger: "blur" }],
+  size:[{ required: true, message: "影院大小是必填项", trigger: "blur" }],
+  cinemaname:[{ required: true, message: "影院是必填项", trigger: "blur" }]
 })
 //新增
 const handleAdd = ()=>{
@@ -134,6 +154,7 @@ const onSubmit = ()=>{
         :width="item.width ? item.width : 155" 
         :prop="item.prop" 
         :label="item.label" 
+        sortable 
         >
         </el-table-column>
         <el-table-column fixed="right" label="操作" min-width="120">

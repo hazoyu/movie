@@ -103,6 +103,13 @@ onMounted( async ()=>{
         </div>
       </div>
     </div>
+    <div class="bread">
+      <el-breadcrumb separator=">">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: `/buy/${route.params.id}` }">选择影院</el-breadcrumb-item>
+        <el-breadcrumb-item >电影详细</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="intro">
       <div class="title">
         <span>介绍</span>
@@ -159,6 +166,7 @@ onMounted( async ()=>{
 
 <style lang="less" scoped>
 .detail {
+  position: relative;
   height: auto;
   width: 100%;
   margin-bottom: 20px;
@@ -201,10 +209,15 @@ onMounted( async ()=>{
     }
 
   }
+  .bread{
+    position: absolute;
+    top:330px;
+    left: 260px;
+  }
   .intro{
     width: 1000px;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 60px;
     .title{
       border-bottom: 1px solid #ccc;
       padding-bottom: 10px;
