@@ -6,7 +6,7 @@ import { useAllDataStore } from '@/stores';
 
 const stoer = useAllDataStore()
 const route = useRoute()
-const user = computed(()=>stoer.state.user.role)
+const user = computed(()=>stoer.state.user)
 
 </script>
 
@@ -23,8 +23,8 @@ const user = computed(()=>stoer.state.user.role)
         <!-- <RouterLink :class="{ active: route.path === '/cinema' }" to="/cinema">影院</RouterLink> -->
       </div>
       <div class="user">
-        <RouterLink v-show="user == '管理员'" to="/admin" target="_blank">管理</RouterLink>
-        <RouterLink :class="{ active: route.path.slice(0, 5) === '/user' }"  to="/user">个人中心</RouterLink>
+        <RouterLink v-show="user.role == '管理员'" to="/admin" target="_blank">管理</RouterLink>
+        <RouterLink :class="{ active: route.path.slice(0, 5) === '/user' }"  to="/user">{{user.username}}</RouterLink>
         <RouterLink class="out" to="/">退出登录</RouterLink>
       </div>
     </div>

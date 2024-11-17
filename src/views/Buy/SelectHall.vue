@@ -97,7 +97,7 @@ onMounted(async()=>{
       <div class="container">
         <h2>{{cinema.name}}</h2>
         <p>地址：{{ cinema.addr }}</p>
-        <p>电话：</p>
+        <p>电话：0775-✶✶✶✶✶✶✶</p>
         <p>影院服务 ————————————————————————————————</p>
         <p class="serve">
           <span class="tab">3D眼镜</span>

@@ -40,7 +40,7 @@ export const getFutureMovieAPI = () =>{
   })
 }
 //修改热门电影
-export const getSaveHotMovieAPI = ({url,title,score,director,kind,region,language,length,id,detail}) =>{ 
+export const getSaveHotMovieAPI = ({url,title,score,director,actor,kind,region,language,length,id,detail}) =>{ 
   return request({
     url:'/moviehot2/save',
     method:"POST",
@@ -49,6 +49,7 @@ export const getSaveHotMovieAPI = ({url,title,score,director,kind,region,languag
       title,
       score,
       director,
+      actor,
       kind,
       region,
       language,
@@ -59,7 +60,7 @@ export const getSaveHotMovieAPI = ({url,title,score,director,kind,region,languag
   })
 }
 //新增热门电影
-export const getnewHotMovieAPI = ({url,title,score,director,kind,region,language,length,detail}) =>{ 
+export const getnewHotMovieAPI = ({url,title,score,director,actor,kind,region,language,length,detail}) =>{ 
   return request({
     url:'/moviehot2/new',
     method:"POST",
@@ -68,6 +69,7 @@ export const getnewHotMovieAPI = ({url,title,score,director,kind,region,language
       title,
       score,
       director,
+      actor,
       kind,
       region,
       language,
@@ -90,7 +92,7 @@ export const getDelHotMovieAPI = (id) =>{
 
 
 //修改即将上映电影
-export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language,length,rel,detail,id}) =>{ 
+export const getUpdataFutureMovieAPI = ({url,title,director,actor,kind,region,language,length,rel,detail,id}) =>{ 
   return request({
     url:'/moviefuture/save',
     method:"POST",
@@ -98,6 +100,7 @@ export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language
       url,
       title,
       director,
+      actor,
       kind,
       region,
       language,
@@ -109,7 +112,7 @@ export const getUpdataFutureMovieAPI = ({url,title,director,kind,region,language
   })
 }
 //新增即将上映电影
-export const getnewFutureMovieAPI = ({url,title,director,kind,region,language,length,detail,rel}) =>{ 
+export const getnewFutureMovieAPI = ({url,title,director,actor,kind,region,language,length,detail,rel}) =>{ 
   return request({
     url:'/moviefuture/new',
     method:"POST",
@@ -117,6 +120,7 @@ export const getnewFutureMovieAPI = ({url,title,director,kind,region,language,le
       url,
       title,
       director,
+      actor,
       kind,
       region,
       language,

@@ -74,6 +74,7 @@ const formUser = reactive({
   url:'',
   title:'',
   director:'',
+  actor:'',
   kind:'',
   region:'',
   language:'',
@@ -106,6 +107,7 @@ const rules = reactive({
                 }
               },trigger: "blur" }],
   director: [{ required: true, message: "导演是必填项", trigger: "blur" }],
+  actor:[{ required: true, message: "演员是必填项", trigger: "blur" }],
   kind: [{ required: true, message: "类型是必填项", trigger: "blur" },],
   region: [{ required: true , message: "地区是必填项", trigger: "blur"}],
   language: [{ required: true , message: "语言是必填项", trigger: "blur"}],
@@ -175,6 +177,7 @@ const onSubmit = ()=>{
           await getnewHotMovieAPI(formUser)
           ElMessage({ type: 'success', message: '添加成功' })
         }else {
+          console.log(formUser);
           await getSaveHotMovieAPI(formUser)
           ElMessage({ type: 'success', message: '修改成功' })
         }
@@ -251,6 +254,13 @@ onMounted(()=>{
           <el-col :span="12">
               <el-form-item label="导演" prop="director">
                 <el-input v-model="formUser.director" placeholder="导演" />
+              </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="18">
+              <el-form-item label="演员" prop="actor">
+                <el-input style="width: 300px;" v-model="formUser.actor" placeholder="演员用，隔开" />
               </el-form-item>
           </el-col>
         </el-row>

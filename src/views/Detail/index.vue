@@ -11,6 +11,7 @@ const route = useRoute()
 const formRef = ref(null)
 
 const detail = ref({})
+const actor = ref([])
 const form = ref({
   moviename:'',
   username:store.state.user.username,
@@ -33,6 +34,8 @@ const getDetail =async ()=>{
   const res = await getMovieDetailAPI(route.params.id)
   detail.value = res
   form.value.moviename = detail.value.title 
+  actor.value = detail.value.actor.split("，")
+  console.log(actor.value);
 }
 //获取评论列表
 const getReviewList =async()=>{
@@ -48,7 +51,7 @@ const getNewReview = ()=>{
   formRef.value.validate(async(valid)=>{
     if (valid){
       await getNewReviewAPI(form.value)
-      getReviewList()
+      await getReviewList()
       ElMessage({ type: 'success', message: '评论成功' })
     }
   })
@@ -66,7 +69,9 @@ function nowDate(time) {
     year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second
   )
 }
-
+const imageUrl = (avatar) => {
+    return new URL(avatar, import.meta.url).href
+}
 
 const submit = () =>{
   centerDialogVisible.value = false
@@ -76,9 +81,9 @@ const submit = () =>{
   getNewReview()
 
 }
-onMounted(()=>{
-  getDetail(),
-  getReviewList()
+onMounted( async ()=>{
+  await getDetail(),
+  await getReviewList()
 })
 </script>
 
@@ -116,7 +121,7 @@ onMounted(()=>{
             <el-descriptions-item  width="150px"  >{{ detail.director }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="5" title="演员">
-            <el-descriptions-item width="150px" v-for="i in 5" >没人</el-descriptions-item>
+            <el-descriptions-item width="180px" v-for="i in actor" >{{ i }}</el-descriptions-item>
           </el-descriptions>
         </div>
       </div>

@@ -51,22 +51,6 @@ const movieList = ref([])
 
 const getFutureMovieList =async ()=>{
   const res = await getFutureMovieAPI()
-  // res.forEach(item => {  //split切割
-  //   Object.keys(item).forEach(key=>{   //Object.keys(obj)返回一个数组
-  //     if (key != 'title' || key != 'rel'){
-  //       const value = item[key]
-  //       if (typeof value === 'string' && value.includes('：')){
-  //         item[key] = item[key].split('：')[1]
-  //       }
-  //     } 
-  //   })
-  //   if(item.rel){    
-  //     if (item.rel.slice(0,4)==='上映时间'){
-  //     item.rel = item.rel.slice(4)
-  //   }
-  //   }
-    
-  // });
   movieList.value = res
 }
 
@@ -77,6 +61,7 @@ const formUser = reactive({
   url:'',
   title:'',
   director:'',
+  actor:'',
   kind:'',
   region:'',
   language:'',
@@ -108,6 +93,7 @@ const rules = reactive({
                 }
               },trigger: "blur" }],
   director: [{ required: true, message: "导演是必填项", trigger: "blur" }],
+  actor:[{ required: true, message: "演员是必填项", trigger: "blur" }],
   kind: [{ required: true, message: "类型是必填项", trigger: "blur" },],
   region: [{ required: true , message: "地区是必填项", trigger: "blur"}],
   language: [{ required: true , message: "语言是必填项", trigger: "blur"}],
@@ -253,6 +239,13 @@ onMounted(()=>{
           <el-col :span="12">
               <el-form-item label="导演" prop="director">
                 <el-input v-model="formUser.director" placeholder="导演" />
+              </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="18">
+              <el-form-item label="演员" prop="actor">
+                <el-input style="width: 300px;" v-model="formUser.actor" placeholder="演员用，隔开" />
               </el-form-item>
           </el-col>
         </el-row>
