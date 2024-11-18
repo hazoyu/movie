@@ -4,7 +4,7 @@ import { getDelOrderAPI } from '@/apis/order';
 import { useAllDataStore } from '@/stores';
 const store = useAllDataStore()
 const currentPage = ref(1)
-const cinemaLabel = reactive([
+const label = reactive([
   {
     prop: 'id',
     label: '订单号',
@@ -13,7 +13,7 @@ const cinemaLabel = reactive([
   {
     prop: 'user',
     label: '用户名称',
-    width:100
+    width:120
     
   },
   {
@@ -104,7 +104,7 @@ const handleDelete = (val)=>{
   <div class="table">
     <el-table :data="cinemaList.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">
         <el-table-column 
-        v-for="item in cinemaLabel" 
+        v-for="item in label" 
         :width="item.width ? item.width : 155" 
         :prop="item.prop" 
         :label="item.label" 
