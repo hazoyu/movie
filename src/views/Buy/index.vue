@@ -3,7 +3,6 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute,useRouter } from 'vue-router';
 import {getMovieDetailAPI} from '@/apis/movie'
 import {getSessionListAPI} from '@/apis/screen'
-import { getMovieScoreAPI } from '@/apis/score';
 import { useAllDataStore } from '@/stores';
 
 const store = useAllDataStore()
@@ -147,7 +146,7 @@ onMounted( async()=>{
     <div class="bread">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>购买页</el-breadcrumb-item>
+        <el-breadcrumb-item>选择影院</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="tags-panel">
