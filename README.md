@@ -13,49 +13,39 @@
 * 添加影台：根据已有影院，对影院进行影厅的增加
 * 添加场次：根据已有的影院，对选择的影院对应的影厅，添加电影放映场次
 ## 项目结构/目录介绍
-MOVIE
-├─node_modules              依赖的第三方库和工具
-├─public                    静态资源文件，如 HTML 文件和图标
-├─package.json              项目依赖和脚本
-├─package-lock.json         依赖版本锁定
-├─vite.config.ts            Vite 配置文件
-├─README.md                 项目说明文档
-└─src                       源代码目录
-	├─assets                静态资源，如图标和图片
-	│    ├─icons             项目中使用的图标
-	│    └─.........         其他图片
-	│
-	├─router                vue-router路由文件
-	│    └─index.js          路由配置的入口文件
-	│
-	├─stores                Pinia状态管理文件
-	│    └─index.js          状态管理文件
-	│
-	├─apis                  封装请求相关接口
-	│    ├─cinema.js         影院相关接口
-	│    ├─login.js          登录相关接口
-	│    ├─movie.js          电影相关接口
-	│    ├─order.js          订单相关接口
-	│    ├─review.js         评论相关接口
-  │    ├─screen.js         场次相关接口
-  │    ├─seat.js           选座相关接口
-  │    └─user.js           用户相关接口
-	│
-	│  
-	├─styles                样式文件
-	│    └─common.scss       全局样式
-  │
-  ├─utils                 封装Axios实例
-	│    └─http.js           二次封装axios
-	│  
-	├─views                 应用的视图组件
-	│    ├─Admin             管理员页面
-	│    ├─Buy               电影购买页面
-	│    ├─CinemaHall        影厅信息管理页面
-	│    ├─CinemaM           影院信息管理页面
-	│    └─Detail            电影详细页面
-	│  
-	├─App.vue               根组件
-	└─main.js               应用的入口文件
+![alt text](/src/assets/image-2.png)
 
-![alt text](image.png)
+![alt text](/src/assets/image-1.png)
+
+## 预览
+### 登录页
+![alt text](/src/assets/image-3.png)
+### 首页
+* 管理员
+![alt text](/src/assets/image-4.png)
+* 用户
+![alt text](/src/assets/image-5.png)
+### 电影详细页
+![alt text](/src/assets/image-6.png)
+### 电影购买页
+* 影院选择页
+![alt text](/src/assets/image-7.png)
+* 影厅选择页
+![alt text](/src/assets/image-8.png)
+* 选择座位页
+![alt text](/src/assets/image-9.png)
+* 付款页
+![alt text](/src/assets/image-10.png)
+* 支付成功页
+![alt text](/src/assets/image-11.png)
+### 个人中心页
+* 我的订单页 
+![alt text](/src/assets/image-12.png)
+* 基本信息页
+![alt text](/src/assets/image-13.png)
+* 修改密码页
+![alt text](/src/assets/image-14.png)
+### 用户管理页
+![alt text](/src/assets/image-15.png)
+* 新增用户
+![alt text](/src/assets/image-16.png)
