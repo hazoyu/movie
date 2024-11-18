@@ -13,13 +13,11 @@ const label = reactive([
   {
     prop: 'user',
     label: '用户名称',
-    width:120
-    
   },
   {
     prop: 'movie',
     label: '电影名称',
-    
+    width:200
   },
   {
     prop: 'cinema',
@@ -28,7 +26,6 @@ const label = reactive([
   {
     prop: 'hall',
     label: '影厅',
-    width:100
   },
   {
     prop: 'time',
