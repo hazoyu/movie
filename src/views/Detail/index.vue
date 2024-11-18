@@ -34,7 +34,7 @@ const getDetail =async ()=>{
   const res = await getMovieDetailAPI(route.params.id)
   detail.value = res
   form.value.moviename = detail.value.title 
-  actor.value = detail.value.actor.split("，")
+  actor.value = detail.value.actor?.split("，")
   console.log(actor.value);
 }
 //获取评论列表

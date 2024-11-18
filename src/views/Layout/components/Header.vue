@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted,ref,reactive } from 'vue';
 import { useRouter,useRoute } from 'vue-router';
 import { useAllDataStore } from '@/stores';
 
@@ -8,6 +8,25 @@ const stoer = useAllDataStore()
 const router = useRouter()
 const route = useRoute()
 const user = computed(()=>stoer.state.user)
+import {getHotMovieAPI} from '@/apis/movie'
+
+const formInfo = reactive({
+  movieId:''
+})
+const options = ref([])
+const getHotMovie = async() =>{
+  const res =await getHotMovieAPI()
+  options.value = res
+}
+
+//搜索
+const select = () =>{
+  if (formInfo){
+    router.push({path:`/detail/${formInfo.movieId}`,squery: {
+    someParam: 'someValue'
+  }})
+  }
+}
 
 const out = () =>{
   ElMessageBox.confirm("你确定要退出登录",{    confirmButtonText: '确定',
@@ -20,6 +39,10 @@ const out = () =>{
     router.push('/')
   })
 }
+
+onMounted(()=>{
+  getHotMovie()
+})
 </script>
 
 <template>
@@ -33,6 +56,23 @@ const out = () =>{
 
         <RouterLink :class="{ active: route.path.slice(0, 6) === '/movie' }" to="/movie">电影</RouterLink>
         <!-- <RouterLink :class="{ active: route.path === '/cinema' }" to="/cinema">影院</RouterLink> -->
+        <div style="margin-top: 22px;">
+          <el-select
+            v-model="formInfo.movieId"
+            filterable
+            placeholder="电影名称"
+            style="width: 240px"
+            no-match-text="无该电影"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.title"
+              :label="item.title"
+              :value="item.id"
+            />
+          </el-select>
+          <el-button type="primary" @click="select">搜索</el-button>
+        </div>
       </div>
       <div class="user">
         <RouterLink v-show="user.role == '管理员'" to="/admin" target="_blank">管理</RouterLink>
