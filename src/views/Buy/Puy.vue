@@ -75,7 +75,7 @@ const confirm = () =>{
       <el-step title="选择放映厅" />
       <el-step title="选择座位" />
       <el-step title="付款" />
-      <el-step title="影院取票观影" />
+      <el-step title="支付成功" />
     </el-steps>
     <div class="time">
       <component class="icons" is="Timer"></component>

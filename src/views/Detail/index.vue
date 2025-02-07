@@ -166,7 +166,7 @@ onMounted( async ()=>{
 
 <style lang="less" scoped>
 .detail {
-  position: relative;
+  // position: relative;
   height: auto;
   width: 100%;
   margin-bottom: 20px;
@@ -210,14 +210,18 @@ onMounted( async ()=>{
 
   }
   .bread{
-    position: absolute;
-    top:330px;
-    left: 260px;
+    // position: absolute;
+    // top:330px;
+    // left: 260px;
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 30px;
   }
   .intro{
     width: 1000px;
     margin: 0 auto;
-    margin-top: 60px;
+    // margin-top: 60px;
+    margin-top: 20px;
     .title{
       border-bottom: 1px solid #ccc;
       padding-bottom: 10px;

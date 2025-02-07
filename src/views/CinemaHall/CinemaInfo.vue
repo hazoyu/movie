@@ -95,7 +95,8 @@ const handleUpdata = (val) =>{
 //删除
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
-  ElMessageBox.confirm("你确定要删除吗").then( async() => {
+  ElMessageBox.confirm("你确定要删除吗",{confirmButtonText: '确定',
+  cancelButtonText: '取消', }).then( async() => {
     await getDelScreenAPI(val.id)
     store.screenList()
     ElMessage({
@@ -138,7 +139,7 @@ const onSubmit = ()=>{
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
-    <el-form :inline="true" :model="search" >
+    <el-form :inline="true" :model="search" @submit.native.prevent>
         <el-form-item label="请输入">
           <el-input v-model="search.name"  placeholder="请输入影院名称"></el-input>
         </el-form-item>

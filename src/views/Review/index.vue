@@ -71,7 +71,8 @@ const searchMovie =async()=>{
 //删除
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
-  ElMessageBox.confirm("你确定要删除吗").then(async () => {
+  ElMessageBox.confirm("你确定要删除吗",{confirmButtonText: '确定',
+  cancelButtonText: '取消', }).then(async () => {
     await getDelReviewAPI(val.id)
     ElMessage({
       showClose: true,
@@ -88,7 +89,7 @@ onMounted(()=>{
 
 <template>
   <div class="header">
-    <el-form :inline="true" :model="form" >
+    <el-form :inline="true" :model="form" @submit.native.prevent>
       <div>
         <el-form-item label="请输入">
           <el-input v-model="form.user"  placeholder="请输入用户名称"></el-input>

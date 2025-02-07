@@ -135,7 +135,8 @@ const handleUpdata = (val) =>{
 const handleDelete = (val) =>{
   let id = parseInt(val.id) //字符串转数字
   console.log(id);
-  ElMessageBox.confirm("你确定要删除吗").then(async () => {
+  ElMessageBox.confirm("你确定要删除吗",{confirmButtonText: '确定',
+  cancelButtonText: '取消', }).then(async () => {
     await getDelUserAPI(id)
     ElMessage({
       showClose: true,
@@ -177,7 +178,7 @@ onMounted(()=>{
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
-    <el-form :inline="true" :model="form" >
+    <el-form :inline="true" :model="form" @submit.native.prevent>
         <el-form-item label="请输入">
           <el-input v-model="form.username"  placeholder="请输入用户名"></el-input>
         </el-form-item>

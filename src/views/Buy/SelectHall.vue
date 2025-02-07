@@ -123,17 +123,17 @@ onMounted(async()=>{
         <span>类型：{{ movie.kind }}</span>
         <span>导演：{{ movie.director }}</span>
         <el-divider />
+        <p class="time">请选择放映时间</p>
       </div>
-      
       <el-radio-group v-model="date" style="margin-bottom: 30px">
         <el-radio-button v-for="item in tabs" :value="item.date" @click="handleDate(item)" >{{ item.date }}</el-radio-button>
       </el-radio-group>
 
       <el-table :data="tableData" style="width: 100%;" empty-text="无场次">
         <el-table-column  v-for="item in label" :prop="item.prop" :label="item.label" width="160" />
-        <el-table-column fixed="right" label="选坐购票" min-width="120">
+        <el-table-column fixed="right" label="选座购票" min-width="120">
           <template #="scope">
-            <el-button type="primary" size="small" @click="selectSeat(scope.row)">选坐购票</el-button>
+            <el-button type="primary" size="small" @click="selectSeat(scope.row)">选座购票</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -186,7 +186,10 @@ onMounted(async()=>{
     height: 500px;
     .info-T{
       margin-top: 10px;
-      margin-bottom: 50px;
+      margin-bottom: 25px;
+      .time{
+        color: red;
+      }
       span{
         margin-right: 30px;
         color: #666;

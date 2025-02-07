@@ -35,7 +35,7 @@ const rules = reactive({
         if (value === form.value.newPassword) {
           callback()
         } else  {
-          callback(new Error('与原密码不一致'))
+          callback(new Error('两次密码不一致'))
         }
       }, trigger: 'blur'
   }]

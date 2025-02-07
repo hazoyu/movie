@@ -124,7 +124,8 @@ const handleUpdata = (val) =>{
 //删除
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
-  ElMessageBox.confirm("你确定要删除吗").then(async() => {
+  ElMessageBox.confirm("你确定要删除吗",{confirmButtonText: '确定',
+  cancelButtonText: '取消', }).then(async() => {
     await getDelSessionAPI(val.id) //删除对应场次
     await getDelSeatAPI(val.id)    //删除对应座位列表
     getList()
@@ -177,7 +178,7 @@ onMounted(()=>{
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
-    <el-form :inline="true" :model="search" >
+    <el-form :inline="true" :model="search" @submit.native.prevent>
         <el-form-item label="请输入">
           <el-input v-model="search.cinemaname"  placeholder="请输入影院名称"></el-input>
         </el-form-item>
@@ -214,7 +215,7 @@ onMounted(()=>{
       <el-pagination background layout="prev, pager, next" v-model:current-page="currentPage" :total="list.length" />
     </div>
   </div>
-  <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增放映厅' : '编辑放映厅'" width="25%" :before-close="handleClose">
+  <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增场次' : '编辑场次'" width="25%" :before-close="handleClose">
     <el-form :inline="true" :model="formInfo" :rules="rules" ref="form">
         <el-row>
           <el-form-item label="影院" prop="cinema">
@@ -238,6 +239,7 @@ onMounted(()=>{
                 v-model="formInfo.hall"
                 placeholder="影厅"
                 style="width: 210px"
+                no-data-text="无放映厅"
               >
                 <el-option
                   v-for="item in screenList"
@@ -280,7 +282,7 @@ onMounted(()=>{
         </el-row>
         <el-row>
           <el-form-item  label="价格" prop="price">
-            <el-input v-model="formInfo.price"  placeholder="场次时间" />
+            <el-input v-model="formInfo.price"  placeholder="场次价格" />
           </el-form-item>
         </el-row>
         <el-row style="justify-content: flex-end">

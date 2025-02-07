@@ -136,7 +136,8 @@ const handleUpdata = (val) =>{
 //删除
 const handleDelete = (val)=>{
   // let id = parseInt(val.id) 字符串转数字
-  ElMessageBox.confirm("你确定要删除吗").then(async () => {
+  ElMessageBox.confirm("你确定要删除吗",{confirmButtonText: '确定',
+  cancelButtonText: '取消', }).then(async () => {
     await getDelFutureMovieAPI(val.id)
     ElMessage({
       showClose: true,
@@ -182,7 +183,7 @@ onMounted(()=>{
 <template>
   <div class="user-header">
     <el-button type="primary" @click="handleAdd">新增</el-button>
-    <el-form :inline="true" :model="form" >
+    <el-form :inline="true" :model="form" @submit.native.prevent>
         <el-form-item label="请输入">
           <el-input v-model="form.title"  placeholder="请输入电影名称"></el-input>
         </el-form-item>
@@ -222,7 +223,7 @@ onMounted(()=>{
     <el-form :inline="true" :model="formUser" :rules="rules" ref="userForm">
       <div class="img">
         <el-form-item  prop="url">
-          <img style="width: 100px; height: 140px;" :src="formUser.url" alt="">
+          <img style="width: 100px; height: 140px;" :src="formUser.url ? formUser.url : 'https://ts1.cn.mm.bing.net/th/id/R-C.a5577a1f443c64cab324515072e7396a?rik=XCfJKg7pBdBDhA&riu=http%3a%2f%2fbpic.588ku.com%2felement_pic%2f01%2f47%2f03%2f35574339ab3c813.jpg&ehk=Sh%2fXxxK9CfUeg61TtZ1B0iWtYcyl4KqFKLJKt%2faTEFA%3d&risl=&pid=ImgRaw&r=0'" alt="">
         </el-form-item>
         <el-form-item prop="url">
           <span>图片网址</span>

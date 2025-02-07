@@ -29,7 +29,7 @@ const select = () =>{
 }
 
 const out = () =>{
-  ElMessageBox.confirm("你确定要退出登录",{    confirmButtonText: '确定',
+  ElMessageBox.confirm("你确定要退出登录",{confirmButtonText: '确定',
   cancelButtonText: '取消', }).then(() => {
     ElMessage({
       showClose: true,
