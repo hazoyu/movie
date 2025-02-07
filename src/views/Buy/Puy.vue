@@ -1,11 +1,22 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, reactive, ref , watchEffect } from 'vue';
 import dayjs from 'dayjs'
 import { useAllDataStore } from '@/stores';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const stoer = useAllDataStore()
-const value = ref(dayjs().add(15, 'minute'))
+
+// 初始化时先检查 localStorage
+const storedTime = localStorage.getItem('countdownTime');
+const value = ref(storedTime ? dayjs(storedTime) : dayjs().add(15, 'minute'));
+
+// 监听 value 变化，实时保存到 localStorage
+watchEffect(() => {
+  localStorage.setItem('countdownTime', value.value);
+});
+
+// 刷新页面时，value 会从 localStorage 中恢复
+
 const label = reactive([
   {
     prop:"movie",
