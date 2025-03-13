@@ -194,7 +194,7 @@ onMounted(()=>{
     </el-form>
   </div>
   <div class="table">
-    <el-table :data="list.slice((currentPage-1)*10,10*currentPage)" style="width: 100%">
+    <el-table :data="list.slice((currentPage-1)*10,10*currentPage)" style="width: 100%" empty-text="无场次">
         <el-table-column 
         v-for="item in label" 
         :width="item.width ? item.width : 155" 

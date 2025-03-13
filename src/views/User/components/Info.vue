@@ -131,8 +131,8 @@ const beforeUpload = (rawFile) => {
   margin-left: 170px;
 
   .avatar {
-    width: 170px;
-    height: 170px;
+    width: 169px;
+    height: 169px;
   }
 
   .avatar-uploader-icon {

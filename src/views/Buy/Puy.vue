@@ -9,7 +9,7 @@ const stoer = useAllDataStore()
 // 初始化时先检查 localStorage
 const storedTime = localStorage.getItem('countdownTime');
 const value = ref(storedTime ? dayjs(storedTime) : dayjs().add(15, 'minute'));
-
+ 
 // 监听 value 变化，实时保存到 localStorage
 watchEffect(() => {
   localStorage.setItem('countdownTime', value.value);
@@ -68,7 +68,8 @@ const confirm = () =>{
         message: '支付成功',
         type: 'success'
       })
-    
+      //支付成功删除倒计时
+      localStorage.removeItem('countdownTime');
       router.push("/success")
   })
 }
