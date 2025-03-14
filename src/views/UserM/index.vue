@@ -199,7 +199,7 @@ onMounted(()=>{
         </el-table-column>
         <el-table-column fixed="right" label="操作" min-width="120">
           <template #="scope">
-            <el-button type="primary" size="small" @click="handleUpdata(scope.row)">修改</el-button>
+            <el-button type="primary" size="small" @click="handleUpdata(scope.row)">编辑</el-button>
             <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -209,7 +209,7 @@ onMounted(()=>{
     </div>
   </div>
 
-  <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增用户' : '修改用户'" width="35%" :before-close="handleClose">
+  <el-dialog v-model="dialogVisible" :title="action == 'add' ? '新增用户' : '编辑用户'" width="35%" :before-close="handleClose">
     <!--需要注意的是设置了:inline="true"，
 		会对el-select的样式造成影响，我们通过给他设置一个class=select-clearn
 		在css进行处理
